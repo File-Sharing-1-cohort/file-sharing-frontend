@@ -1,9 +1,20 @@
-import { FC } from 'react';
+import { toast } from 'sonner';
 
-type THomePageProps = object;
-
-const HomePage: FC<THomePageProps> = () => {
-  return <h1>our</h1>;
+const HomePage = () => {
+  return (
+    <div>
+      <button
+        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out"
+        onClick={() => {
+          toast.success('Hellooooooooooooooooooooooo!!!');
+          toast.info('Toast');
+          toast.error('Works!');
+        }}
+      >
+        Click meeeeee =)
+      </button>
+    </div>
+  );
 };
 
 export { HomePage };

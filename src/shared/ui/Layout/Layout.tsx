@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 type TLayoutProps = {
   header: ReactNode;
@@ -14,6 +15,7 @@ const Layout: FC<TLayoutProps> = ({ header, footer }) => {
         <Outlet />
       </main>
       {footer}
+      <Toaster richColors expand position="bottom-center" />
     </div>
   );
 };
