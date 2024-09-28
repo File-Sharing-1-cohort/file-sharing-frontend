@@ -9,9 +9,9 @@ type TLayoutProps = {
 
 const Layout: FC<TLayoutProps> = ({ header, footer }) => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       {header}
-      <main>
+      <main className="flex-grow">
         <Outlet />
       </main>
       {footer}

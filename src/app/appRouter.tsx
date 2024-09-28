@@ -1,7 +1,6 @@
 import { RouteObject, createHashRouter as Router } from 'react-router-dom';
 
 import { HomePage } from '@/pages/home';
-import { Faq } from '@/pages/faq';
 
 import { baseLayout } from '@/app/layout/baseLayout';
 
@@ -13,10 +12,6 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <HomePage />,
-      },
-      {
-        path: '/faq',
-        element: <Faq />,
       },
       {
         path: '*',
