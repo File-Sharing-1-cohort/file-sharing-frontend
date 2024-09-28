@@ -6,12 +6,14 @@ type THeaderProps = object;
 
 const Header: FC<THeaderProps> = () => {
   return (
-    <header className="container flex justify-between items-center py-11 bg-gray-300">
-      <Button asChild variant="link">
-        <Link to="/">Logo</Link>
-      </Button>
+    <header className="bg-gray-300">
+      <div className="container flex justify-between items-center py-11">
+        <Button asChild variant="link">
+          <Link to="/">Logo</Link>
+        </Button>
 
-      <span>UA</span>
+        <span>UA</span>
+      </div>
     </header>
   );
 };

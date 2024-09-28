@@ -5,7 +5,11 @@ export default {
   theme: {
     extend: {
       screens: {
+        '2xl': '1440px',
         lg: '1040px',
+      },
+      fontSize: {
+        title: '2.5rem',
       },
       borderRadius: {
         lg: 'var(--radius)',
