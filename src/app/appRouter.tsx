@@ -1,9 +1,9 @@
 import { RouteObject, createHashRouter as Router } from 'react-router-dom';
 
 import { HomePage } from '@/pages/home';
-import { Faq } from '@/pages/faq';
 
 import { baseLayout } from '@/app/layout/baseLayout';
+import { FaqPage } from '@/pages/faq';
 
 const routes: RouteObject[] = [
   {
@@ -16,7 +16,7 @@ const routes: RouteObject[] = [
       },
       {
         path: '/faq',
-        element: <Faq />,
+        element: <FaqPage />,
       },
       {
         path: '*',

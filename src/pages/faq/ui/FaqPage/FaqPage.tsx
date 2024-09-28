@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
 } from '@/shared/ui';
 
-const Faq = () => {
+const FaqPage = () => {
   return (
     <section className="container">
       <h1 className="title m-4">Часті запитання (FAQ)</h1>
@@ -28,4 +28,4 @@ const Faq = () => {
   );
 };
 
-export { Faq };
+export { FaqPage };

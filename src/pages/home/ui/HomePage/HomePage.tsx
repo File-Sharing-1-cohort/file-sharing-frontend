@@ -1,6 +1,8 @@
 import { toast } from 'sonner';
 import { useDebounceCallback } from 'usehooks-ts';
+import { Link } from 'react-router-dom';
 
+import { useCheckApiQuery } from '@/shared/api';
 import {
   Accordion,
   AccordionContent,
@@ -17,9 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui';
-
-import { useCheckApiQuery } from '@/shared/api';
-import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const { data } = useCheckApiQuery();

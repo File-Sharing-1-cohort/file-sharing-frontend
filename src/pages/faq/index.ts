@@ -1,1 +1,1 @@
-export * from './ui/Faq';
+export * from './ui/FaqPage';
