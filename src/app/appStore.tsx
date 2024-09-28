@@ -1,4 +1,4 @@
-import { baseApi } from '@/shared';
+import { baseApi } from '@/shared/api';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 

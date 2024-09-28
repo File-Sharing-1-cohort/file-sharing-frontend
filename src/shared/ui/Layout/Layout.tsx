@@ -9,7 +9,7 @@ type TLayoutProps = {
 
 const Layout: FC<TLayoutProps> = ({ header, footer }) => {
   return (
-    <div className="text-center flex flex-col gap-3 pt-5 text-3xl">
+    <div>
       {header}
       <main>
         <Outlet />
