@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './Accordion';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from './Accordion';
 
 describe('Accordion', () => {
   it('should toggle content visibility when clicked', () => {
@@ -10,7 +15,7 @@ describe('Accordion', () => {
           <AccordionTrigger>Trigger 1</AccordionTrigger>
           <AccordionContent>Content 1</AccordionContent>
         </AccordionItem>
-      </Accordion>
+      </Accordion>,
     );
 
     expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
@@ -26,6 +31,3 @@ describe('Accordion', () => {
     expect(screen.getByText('Content 1')).toBeVisible();
   });
 });
-
-
-
