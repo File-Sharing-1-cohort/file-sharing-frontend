@@ -21,7 +21,7 @@ const routes: RouteObject[] = [
       },
       {
         path: '/recipient',
-        element: <RecipientPage/>
+        element: <RecipientPage />,
       },
       {
         path: '*',

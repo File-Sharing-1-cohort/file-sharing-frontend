@@ -1,1 +1,1 @@
-export * from './RecipientPage'
+export * from './RecipientPage';
