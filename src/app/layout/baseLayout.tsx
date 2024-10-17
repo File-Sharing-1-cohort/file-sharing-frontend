@@ -1,13 +1,10 @@
 import { Footer } from '@/widgets/footer';
 import { Header } from '@/widgets/header';
 import * as Sentry from '@sentry/react';
-import dotenv from 'dotenv';
 import { Layout } from '@/shared/ui';
 
-dotenv.config();
-
 Sentry.init({
-  dsn: process.env.SENTRY_DSN,
+  dsn: import.meta.env.VITE_SENTRY_DSN,
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),
