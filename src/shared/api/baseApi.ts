@@ -5,7 +5,7 @@ const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_API_URL }),
   endpoints: build => ({
     checkApi: build.query<string, void>({ query: () => 'ping' }),
-    getLogo: build.query<string, void>({query: () => 'public/logo'}),
+    getLogo: build.query<string, void>({ query: () => 'public/logo' }),
   }),
 });
 
