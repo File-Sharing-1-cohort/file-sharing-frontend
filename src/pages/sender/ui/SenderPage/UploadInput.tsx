@@ -8,9 +8,7 @@ interface UploadFileProps {
   setSelectedFile: (file: File | null) => void;
 }
 
-const UploadFile: React.FC<UploadFileProps> = ({
-  setSelectedFile,
-}) => {
+const UploadFile: React.FC<UploadFileProps> = ({ setSelectedFile }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 

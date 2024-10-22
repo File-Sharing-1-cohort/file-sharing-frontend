@@ -1,8 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface UploadFileResponse {
-  presignedUrl: string;
+  originalFileName: string;
+  awsFileName: string;
+  link: string;
+  password: string | null;
+  id: number;
 }
+
 
 const baseApi = createApi({
   reducerPath: 'api',

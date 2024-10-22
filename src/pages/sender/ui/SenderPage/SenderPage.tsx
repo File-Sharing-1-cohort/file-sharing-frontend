@@ -23,6 +23,7 @@ const SenderPage: React.FC = () => {
   };
 
   const uploadFileToS3 = (url: string, file: File, password: string | null) => {
+    console.log(`Uploading file to URL: ${url}`);
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open('PUT', url, true);
@@ -50,7 +51,8 @@ const SenderPage: React.FC = () => {
       xhr.onerror = () => reject(xhr.statusText);
       xhr.send(file);
     });
-  };
+};
+
 
   const handleUploadFile = async () => {
     if (selectedFile) {
@@ -61,9 +63,13 @@ const SenderPage: React.FC = () => {
       try {
         const formData = new FormData();
         formData.append('file', selectedFile);
+        console.log('Selected file:', selectedFile);
+        console.log('FormData content:', formData.get('file'));
         const response = await uploadFile(formData).unwrap();
-        const presignedUrl = response.presignedUrl;
-
+        console.log('Server response:', response);
+        const presignedUrl = response.link;
+        console.log('Presigned URL:', presignedUrl);
+          
         await uploadFileToS3(presignedUrl, selectedFile, password);
 
         handleUploadComplete();
