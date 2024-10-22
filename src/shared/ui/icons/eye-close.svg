@@ -10,6 +10,7 @@
     strokeLinejoin="round"
 >
     <path d="M1 12c0 0 2-5 11-5s11 5 11 5-2 5-11 5-11-5-11-5z" />
-    <circle cx="12" cy="12" r="3" />
+    <circle cx="12" cy="12" r="3" /> 
+    <path d="M1 1l22 22" /> 
 </svg>
 

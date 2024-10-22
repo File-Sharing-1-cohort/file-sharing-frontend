@@ -4,7 +4,8 @@ import { HomePage } from '@/pages/home';
 
 import { baseLayout } from '@/app/layout/baseLayout';
 import { FaqPage } from '@/pages/faq';
-import { RecipientPage } from '@/pages/recipient/';
+import { DownloadFile } from '@/pages/recipient/';
+import { SenderPage } from '@/pages/sender';
 
 const routes: RouteObject[] = [
   {
@@ -20,8 +21,12 @@ const routes: RouteObject[] = [
         element: <FaqPage />,
       },
       {
-        path: '/recipient',
-        element: <RecipientPage />,
+        path: '/sender',
+        element: <SenderPage />,
+      },
+      {
+        path: '/recipient/:fileId',
+        element: <DownloadFile />,
       },
       {
         path: '*',

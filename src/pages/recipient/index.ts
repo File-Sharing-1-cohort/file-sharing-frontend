@@ -1,1 +1,1 @@
-export * from './ui/RecipientPage';
+export * from './ui/DownloadFile';
