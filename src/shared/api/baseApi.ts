@@ -8,7 +8,6 @@ interface UploadFileResponse {
   id: number;
 }
 
-
 const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
