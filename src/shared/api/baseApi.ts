@@ -1,13 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-interface UploadFileResponse {
-  originalFileName: string;
-  awsFileName: string;
-  link: string;
-  password: string | null;
-  id: number;
-}
-
 const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -16,7 +8,7 @@ const baseApi = createApi({
   endpoints: build => ({
     checkApi: build.query<string, void>({ query: () => 'ping' }),
     getLogo: build.query<string, void>({ query: () => 'public/logo' }),
-    uploadFile: build.mutation<UploadFileResponse, FormData>({
+    uploadFile: build.mutation<void, FormData>({
       query: formData => ({
         url: 'files',
         method: 'POST',

@@ -22,37 +22,6 @@ const SenderPage: React.FC = () => {
     setUploadProgress(null);
   };
 
-  const uploadFileToS3 = (url: string, file: File, password: string | null) => {
-    console.log(`Uploading file to URL: ${url}`);
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('PUT', url, true);
-      xhr.setRequestHeader('Content-Type', file.type);
-
-      if (password) {
-        xhr.setRequestHeader('X-File-password', password);
-      }
-
-      xhr.upload.onprogress = e => {
-        if (e.lengthComputable) {
-          const progress = (e.loaded / e.total) * 100;
-          handleUploadProgress(progress);
-        }
-      };
-
-      xhr.onload = () => {
-        if (xhr.status === 200) {
-          resolve(xhr.response);
-        } else {
-          reject(xhr.statusText);
-        }
-      };
-
-      xhr.onerror = () => reject(xhr.statusText);
-      xhr.send(file);
-    });
-  };
-
   const handleUploadFile = async () => {
     if (selectedFile) {
       setIsUploading(true);
@@ -63,17 +32,12 @@ const SenderPage: React.FC = () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
         if (password) {
-            formData.append('password', password);
+          formData.append('password', password);
         }
         console.log('Selected file:', selectedFile);
         console.log('FormData content:', formData.get('file'));
         const response = await uploadFile(formData).unwrap();
         console.log('Server response:', response);
-        const presignedUrl = response.link;
-        console.log('Presigned URL:', presignedUrl);
-
-        await uploadFileToS3(presignedUrl, selectedFile, password);
-
         handleUploadComplete();
 
         toast.success('File uploaded successfully', { id: toastId });
