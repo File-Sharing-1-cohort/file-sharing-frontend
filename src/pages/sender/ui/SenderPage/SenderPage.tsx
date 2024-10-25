@@ -34,6 +34,7 @@ const SenderPage: React.FC = () => {
         if (password) {
           formData.append('password', password);
         }
+        uploadFileWithProgress(formData);
         console.log('Selected file:', selectedFile);
         console.log('FormData content:', formData.get('file'));
         const response = await uploadFile(formData).unwrap();
@@ -50,6 +51,20 @@ const SenderPage: React.FC = () => {
     } else {
       toast.error('No file selected!', { id: 'file-select-error' });
     }
+  };
+
+  const uploadFileWithProgress = (formData: FormData) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `${import.meta.env.VITE_BASE_API_URL}/files`, true);
+
+    xhr.upload.onprogress = event => {
+      if (event.lengthComputable) {
+        const progress = Math.round((event.loaded / event.total) * 100);
+        handleUploadProgress(progress);
+      }
+    };
+
+    xhr.send(formData);
   };
 
   const handleSetPassword = (newPassword: string) => {
