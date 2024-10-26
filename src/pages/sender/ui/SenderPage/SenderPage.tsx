@@ -3,6 +3,8 @@ import { UploadFile } from './UploadInput';
 import { Progress } from '@/shared/ui';
 import { useUploadFileMutation } from '@/shared/api';
 import { ModalPassword } from './ModalPassword';
+import { useNavigate } from 'react-router-dom';
+import { useFileContext } from '@/app/FileContext';
 import { toast } from 'sonner';
 
 const SenderPage: React.FC = () => {
@@ -12,6 +14,8 @@ const SenderPage: React.FC = () => {
   const [uploadFile] = useUploadFileMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState<string | null>(null);
+  const { setFileId } = useFileContext();
+  const navigate = useNavigate();
 
   const handleUploadProgress = (progress: number) => {
     setUploadProgress(progress);
@@ -38,10 +42,16 @@ const SenderPage: React.FC = () => {
         console.log('Selected file:', selectedFile);
         console.log('FormData content:', formData.get('file'));
         const response = await uploadFile(formData).unwrap();
+        if (response.id) {
+          setFileId(response.id)
+          console.log('FileID:', response.id);
+        }
         console.log('Server response:', response);
-        handleUploadComplete();
 
         toast.success('File uploaded successfully', { id: toastId });
+
+        handleUploadComplete();
+        navigate('/download-link');
       } catch (error) {
         console.error('Upload error:', error);
         toast.error('Failed to upload file', { id: toastId });
