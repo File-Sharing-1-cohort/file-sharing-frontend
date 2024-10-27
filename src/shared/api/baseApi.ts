@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface FileData {
-    originalFileName: string;
-    awsFileName: string;
-    link: string;
-    password: string | null;
-    id: number;
+  originalFileName: string;
+  awsFileName: string;
+  link: string;
+  password: string | null;
+  id: number;
 }
 
 const baseApi = createApi({
@@ -33,10 +33,7 @@ const baseApi = createApi({
   }),
 });
 
-export const {
-  useCheckApiQuery,
-  useGetLogoQuery,
-  useUploadFileMutation,
-} = baseApi;
+export const { useCheckApiQuery, useGetLogoQuery, useUploadFileMutation } =
+  baseApi;
 
 export { baseApi };

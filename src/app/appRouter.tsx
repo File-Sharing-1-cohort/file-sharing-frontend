@@ -27,7 +27,7 @@ const routes: RouteObject[] = [
       },
       {
         path: '/download-link',
-        element: <DownloadPage />
+        element: <DownloadPage />,
       },
       {
         path: '/recipient/:fileId',

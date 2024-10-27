@@ -43,7 +43,7 @@ const SenderPage: React.FC = () => {
         console.log('FormData content:', formData.get('file'));
         const response = await uploadFile(formData).unwrap();
         if (response.id) {
-          setFileId(response.id)
+          setFileId(response.id);
           console.log('FileID:', response.id);
         }
         console.log('Server response:', response);
