@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input } from '@/shared/ui';
 import eye from '@/shared/ui/icons/eye-open.svg';
 import eyeClosed from '@/shared/ui/icons/eye-close.svg';
+import lock from '@/shared/ui/icons/lock.svg';
 
 interface ModalPasswordProps {
   onSave: (password: string) => void;
@@ -15,24 +16,38 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
   isOpen,
 }) => {
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setPassword('');
+      setErrorMessage('');
+    }
+  }, [isOpen]);
+
+  const validatePassword = () => {
+    if (password.length > 0 && (password.length < 1 || password.length > 30)) {
+      setErrorMessage('Password must be between 1 and 30 characters');
+    } else {
+      setErrorMessage('');
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    validatePassword();
+  };
 
   const handleSave = () => {
     if (password.length < 1 || password.length > 30) {
       setErrorMessage('Password must be between 1 and 30 characters');
       return;
     }
-    if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match');
-      return;
-    }
 
     onSave(password);
     setErrorMessage('');
     setPassword('');
-    setConfirmPassword('');
     onClose();
   };
 
@@ -40,51 +55,46 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-lg font-bold mb-4">Create a Password</h2>
-        <div className="relative mb-4">
-          <Input
-            type={showPassword ? 'text' : 'password'}
-            placeholder="Enter your password"
-            className="pr-10"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          <img
-            onClick={() => setShowPassword(prev => !prev)}
-            src={showPassword ? eyeClosed : eye}
-            alt="Toggle visibility"
-            className="absolute right-2 top-1/2 transform -translate-y-1/2"
-          />
+      <div className="flex flex-col items-center gap-10 gradient-modal p-6 rounded-lg shadow-lg w-[620px]">
+        <div className="flex start justify-center gap-2">
+          <img src={lock} alt="lock" />
+          <h2 className="text-[20px] font-[500] text-white">
+            Create a Password
+          </h2>
         </div>
-        <div className="relative mb-4">
-          <Input
-            type={showPassword ? 'text' : 'password'}
-            placeholder="Confirm your password"
-            className="pr-10"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-          />
-          <img
-            onClick={() => setShowPassword(prev => !prev)}
-            src={showPassword ? eyeClosed : eye}
-            alt="Toggle visibility"
-            className="absolute right-2 top-1/2 transform -translate-y-1/2"
-          />
+        <div className="w-full px-20">
+          <span className="text-white">Password</span>
+          <div className="relative">
+            <Input
+              type={showPassword ? 'text' : 'password'}
+              className={`pr-10 ${errorMessage ? 'bg-[#FE51514D]' : ''}`}
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            <img
+              onClick={() => setShowPassword(prev => !prev)}
+              src={showPassword ? eyeClosed : eye}
+              alt="Toggle visibility"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+            />
+          </div>
+          {errorMessage ? (
+            <span className="text-[14px] text-red-500">{errorMessage}</span>
+          ) : (
+            <span className="text-[14px] text-white">
+              Password must contain between 1 and 30 characters
+            </span>
+          )}
         </div>
-        {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
-        <div className="flex justify-end gap-3">
-          <button
-            type="button"
-            onClick={onClose}
-            className="bg-gray-500 text-white px-4 py-2 rounded"
-          >
-            Cancel
+        <div className="flex end gap-3">
+          <button type="button" onClick={onClose} className="btn-primary">
+            Exit
           </button>
           <button
             type="button"
             onClick={handleSave}
-            className="bg-gray-500 text-white px-4 py-2 rounded"
+            className={`btn-primary ${!password ? 'bg-gray-500 cursor-not-allowed' : 'btn-primary'}`}
+            disabled={!password}
           >
             Save
           </button>

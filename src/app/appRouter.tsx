@@ -6,7 +6,7 @@ import { baseLayout } from '@/app/layout/baseLayout';
 import { FaqPage } from '@/pages/faq';
 import { DownloadFile } from '@/pages/recipient/';
 import { SenderPage } from '@/pages/sender';
-import { DownloadPage } from '@/pages/download-link';
+import { DownloadLink } from '@/pages/download-link';
 
 const routes: RouteObject[] = [
   {
@@ -27,7 +27,7 @@ const routes: RouteObject[] = [
       },
       {
         path: '/download-link',
-        element: <DownloadPage />,
+        element: <DownloadLink />,
       },
       {
         path: '/recipient/:fileId',

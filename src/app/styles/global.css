@@ -58,11 +58,9 @@
   }
 }
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
     @apply bg-background text-foreground;
+    @apply m-0;
   }
 }
 
@@ -79,7 +77,82 @@
     @apply max-w-screen-lg m-auto  px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20;
   }
 
-  .title {
-    @apply text-title text-center;
+  .drag-gradient {
+    background: linear-gradient(180deg, #7bb3f1 0%, #e0f7ff 100%);
+  }
+
+  .gradient-service {
+    background: linear-gradient(180deg, #f6f6f6 0%, #ffffff 50%, #f6f6f6 100%);
+  }
+
+  .gradient-modal {
+    background: linear-gradient(
+      180deg,
+      rgba(19, 84, 154, 0.95) 0%,
+      rgba(123, 179, 241, 0.95) 100%
+    );
+  }
+
+  .drag-backdrop {
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 4px 15px 0px rgba(17, 106, 204, 0.2) inset;
+  }
+
+  .gradient-border {
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    z-index: 1;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgba(19, 84, 154, 0.95) 0%,
+      rgba(123, 179, 241, 0.95) 100%
+    );
+    border-radius: 8px;
+    padding: 1px;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .start {
+    align-self: flex-start;
+  }
+
+  .end {
+    align-self: flex-end;
+  }
+
+  .btn-home {
+    background: #fff;
+    padding: 10px 44px;
+    display: flex;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: rgba(17, 106, 204, 1);
+    color: rgba(255, 255, 255, 1);
+    padding: 10px 44px;
+    display: flex;
+    gap: 8px;
+    border-radius: 8px;
+    cursor: pointer;
   }
 }
