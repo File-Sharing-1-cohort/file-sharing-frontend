@@ -22,7 +22,7 @@ const baseApi = createApi({
         method: 'POST',
         body: formData,
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
+      async onQueryStarted( queryFulfilled ) {
         try {
           await queryFulfilled;
         } catch (error) {
