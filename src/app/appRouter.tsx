@@ -1,7 +1,5 @@
 import { RouteObject, createHashRouter as Router } from 'react-router-dom';
 
-import { HomePage } from '@/pages/home';
-
 import { baseLayout } from '@/app/layout/baseLayout';
 import { FaqPage } from '@/pages/faq';
 import { DownloadFile } from '@/pages/recipient/';
@@ -15,15 +13,11 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <SenderPage />,
       },
       {
         path: '/faq',
         element: <FaqPage />,
-      },
-      {
-        path: '/sender',
-        element: <SenderPage />,
       },
       {
         path: '/download-link',
