@@ -51,7 +51,7 @@ const HomePage = () => {
         </SelectContent>
       </Select>
 
-      <Progress value={33} />
+      <Progress value={100} />
 
       <Input placeholder="get" />
 

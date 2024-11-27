@@ -4,6 +4,14 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      boxShadow: {
+        custom: '0px -8px 15px 0px rgba(170, 170, 170, 0.1)',
+        'header-custom': '0px 8px 15px 0px rgba(170, 170, 170, 0.1)',
+      },
+      backgroundImage: {
+        'header-footer-gradient':
+          'linear-gradient(180deg, #F6F6F6 0%, #F4FAFF 50%, #EEF5FF 100%)',
+      },
       screens: {
         '2xl': '1440px',
         lg: '1040px',
@@ -17,6 +25,17 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        customLightBlue: '#116ACC',
+        customGreen: '#76CA66',
+        customYellow: '#FBC756',
+        customRed: '#8A0000',
+        customGray: '#404244',
+        customBlue: '#A0C3FF',
+        customBlack: '#121212',
+        'toast-success': '#76CA6626',
+        'toast-yellow': '#FFCFB140',
+        'toast-alert': '#7BB3F126',
+        'toast-error': 'rgba(254, 81, 81, 0.15)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -47,9 +66,6 @@ export default {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
         chart: {
           1: 'hsl(var(--chart-1))',
           2: 'hsl(var(--chart-2))',

@@ -15,12 +15,7 @@ const Layout: FC<TLayoutProps> = ({ header, footer }) => {
         <Outlet />
       </main>
       {footer}
-      <Toaster richColors expand position="bottom-center" />
-      <Toaster expand position="bottom-left" />
-      <Toaster richColors position="top-center" />
-      <Toaster richColors expand position="bottom-right" />
-      <Toaster richColors expand position="top-left" />
-      <Toaster richColors expand position="top-right" />
+      <Toaster richColors expand position="top-center" />
     </div>
   );
 };
