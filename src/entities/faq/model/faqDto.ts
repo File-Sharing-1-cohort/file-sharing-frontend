@@ -4,8 +4,7 @@ const faqDto: IFaqDto[] = [
   {
     id: 1,
     title: 'Is it free to use the service?',
-    description:
-      'Yes. The service is out-of-charge.',
+    description: 'Yes. The service is out-of-charge.',
     slug: 'do-i-need-to-pay',
   },
   {
@@ -40,8 +39,7 @@ const faqDto: IFaqDto[] = [
   {
     id: 6,
     title: 'How long does a link is stored?',
-    description:
-      'The link is stored during 24h after it was generated.',
+    description: 'The link is stored during 24h after it was generated.',
     slug: 'how-long-are-files-stored',
   },
   {
@@ -53,7 +51,8 @@ const faqDto: IFaqDto[] = [
   },
   {
     id: 8,
-    title: 'Can I choose and download separate files from the package I recieved?',
+    title:
+      'Can I choose and download separate files from the package I recieved?',
     description:
       'Yes. You can download whole package by pressing button “Download” against the package name, or you can also donwload separate files by selecting them with checkbuttons near files.',
     slug: 'download-individual-files',
