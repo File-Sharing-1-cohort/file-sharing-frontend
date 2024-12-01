@@ -15,7 +15,17 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const acceptedExtensions = [
-    'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip', 'rar',
+    'jpg',
+    'jpeg',
+    'png',
+    'gif',
+    'pdf',
+    'doc',
+    'docx',
+    'xls',
+    'xlsx',
+    'zip',
+    'rar',
   ];
   const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
@@ -52,7 +62,11 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
             </div>
           </div>
         ),
-        { duration: 3000, position: 'top-center', className: 'fixed left-1/2 transform -translate-x-1/2' },
+        {
+          duration: 3000,
+          position: 'top-center',
+          className: 'fixed left-1/2 transform -translate-x-1/2',
+        },
       );
       return 'File size exceeds 50 MB.';
     }
@@ -107,7 +121,11 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
               </div>
             </div>
           ),
-          { duration: 3000, position: 'top-center', className: 'fixed left-1/2 transform -translate-x-1/2' },
+          {
+            duration: 3000,
+            position: 'top-center',
+            className: 'fixed left-1/2 transform -translate-x-1/2',
+          },
         );
       }
 
