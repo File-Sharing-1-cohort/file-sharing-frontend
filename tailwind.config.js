@@ -11,6 +11,8 @@ export default {
       backgroundImage: {
         'header-footer-gradient':
           'linear-gradient(180deg, #F6F6F6 0%, #F4FAFF 50%, #EEF5FF 100%)',
+        'gradient-faq':
+          'linear-gradient(180deg, rgba(123, 179, 241, 0.15) 0%, rgba(186, 219, 255, 0.15) 52.5%, rgba(123, 179, 241, 0.15) 100%);',
       },
       screens: {
         '2xl': '1440px',

@@ -3,45 +3,43 @@ import { IFaqDto } from '../types/IFaqDto';
 const faqDto: IFaqDto[] = [
   {
     id: 1,
-    title: 'Do I need to pay to use the service?',
-    description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis, error fuga. Dolor, cumque. Eligendi labore officia, ad explicabo repellat assumenda ipsum asperiores consectetur provident iure officiis laudantium animi velit sit!',
+    title: 'Is it free to use the service?',
+    description: 'Yes. The service is out-of-charge.',
     slug: 'do-i-need-to-pay',
   },
   {
     id: 2,
-    title: 'Is registration required to send files?',
+    title: 'Should I register to send files?',
     description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis, error fuga. Dolor, cumque. Eligendi labore officia, ad explicabo repellat assumenda ipsum asperiores consectetur provident iure officiis laudantium animi velit sit!',
+      'No. You don’t need any registration or authorization to use the service.',
     slug: 'is-registration-required',
   },
   {
     id: 3,
-    title: 'Does the recipient need to be registered on the service?',
+    title: 'Should recipient be registered to send files?',
     description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis, error fuga. Dolor, cumque. Eligendi labore officia, ad explicabo repellat assumenda ipsum asperiores consectetur provident iure officiis laudantium animi velit sit!',
+      'No, sender as well as repicient can send files without registration.',
     slug: 'does-recipient-need-registration',
   },
   {
     id: 4,
-    title: 'In what formats can I send files?',
+    title: 'Which formats does the service accept?',
     description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis, error fuga. Dolor, cumque. Eligendi labore officia, ad explicabo repellat assumenda ipsum asperiores consectetur provident iure officiis laudantium animi velit sit!',
+      'The acceptable types of files include: jpg, jpeg, png, gif, doc, docx, xls, xlsx, pdf, zip, rar.',
     slug: 'file-formats-supported',
   },
   {
     id: 5,
     title:
-      'If I want to send a file in a different format, do I need to convert it using a third-party service?',
+      'If I want to send a file in a different format, do I have to convert it on a side service?',
     description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis, error fuga. Dolor, cumque. Eligendi labore officia, ad explicabo repellat assumenda ipsum asperiores consectetur provident iure officiis laudantium animi velit sit!',
+      'No. You can convert files on our FileSharing from/into the following formats: jpg, jpeg, png, gif, doc, docx, xls, xlsx, pdf, zip, rar.',
     slug: 'convert-files-to-different-format',
   },
   {
     id: 6,
-    title: 'How long are the files stored?',
-    description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis, error fuga. Dolor, cumque. Eligendi labore officia, ad explicabo repellat assumenda ipsum asperiores consectetur provident iure officiis laudantium animi velit sit!',
+    title: 'How long does a link is stored?',
+    description: 'The link is stored during 24h after it was generated.',
     slug: 'how-long-are-files-stored',
   },
   {
@@ -53,17 +51,25 @@ const faqDto: IFaqDto[] = [
   },
   {
     id: 8,
-    title: 'Can I select and download individual files from a package?',
+    title:
+      'Can I choose and download separate files from the package I recieved?',
     description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis, error fuga. Dolor, cumque. Eligendi labore officia, ad explicabo repellat assumenda ipsum asperiores consectetur provident iure officiis laudantium animi velit sit!',
+      'Yes. You can download whole package by pressing button “Download” against the package name, or you can also donwload separate files by selecting them with checkbuttons near files.',
     slug: 'download-individual-files',
   },
   {
     id: 9,
-    title: 'How many files can I send at once?',
+    title: 'How many files can I send in one link?',
     description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis, error fuga. Dolor, cumque. Eligendi labore officia, ad explicabo repellat assumenda ipsum asperiores consectetur provident iure officiis laudantium animi velit sit!',
+      'There is no limit for the number of files you send. The whole size of the package in one link should not exceed 50 MB. ',
     slug: 'how-many-files-can-i-send',
+  },
+  {
+    id: 10,
+    title: 'My package exceeds maximum size of 50 MB. What should I do?',
+    description:
+      'In case total size of your transfer exceeds 50 MB, FileSharing will offer you to archieve files or compress them during the upload. ',
+    slug: 'maximal-size-file',
   },
 ];
 
