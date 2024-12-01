@@ -193,44 +193,44 @@ const DownloadFile = () => {
     } catch (error) {
       console.error('Download error:', error);
       toast.custom(
-          () => (
-            <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
-              <div className="flex start gap-2">
-                <img src={errorIcon} alt="error" />
-                <h4 className="font-semibold text-customGray text-[24px] font-[600]">
-                  Something went wrong
-                </h4>
-              </div>
-              <div className="px-3 mt-2 text-customBlack">
-                An unknown error occurred while downloading the file
-              </div>
-              <div className="flex end gap-6  mt-4 space-x-2">
-                <button
-                  onClick={() => {
-                    toast.dismiss();
-                  }}
-                  className="px-4 py-2 text-[20px] border border-customRed text-customGray font-[400] bg-transparent rounded"
-                >
-                  Exit
-                </button>
-                <button
-                  onClick={() => {
-                    toast.dismiss();
-                  }}
-                  className="px-4 py-2 text-[20px] font-[400] text-white bg-customRed rounded"
-                >
-                  Try again
-                </button>
-              </div>
+        () => (
+          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
+            <div className="flex start gap-2">
+              <img src={errorIcon} alt="error" />
+              <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+                Something went wrong
+              </h4>
             </div>
-          ),
-          {
-            duration: 3000,
-            position: 'top-center',
-            className: `
+            <div className="px-3 mt-2 text-customBlack">
+              An unknown error occurred while downloading the file
+            </div>
+            <div className="flex end gap-6  mt-4 space-x-2">
+              <button
+                onClick={() => {
+                  toast.dismiss();
+                }}
+                className="px-4 py-2 text-[20px] border border-customRed text-customGray font-[400] bg-transparent rounded"
+              >
+                Exit
+              </button>
+              <button
+                onClick={() => {
+                  toast.dismiss();
+                }}
+                className="px-4 py-2 text-[20px] font-[400] text-white bg-customRed rounded"
+              >
+                Try again
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          duration: 3000,
+          position: 'top-center',
+          className: `
                 fixed left-1/2 transform -translate-x-1/2
               `,
-          },
+        },
       );
     }
   };
