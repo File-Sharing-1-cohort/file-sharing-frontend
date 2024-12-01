@@ -223,7 +223,7 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
         <img src={uploadFileIcon} alt="uploadFile" />
         <Input
           type="file"
-          className="hidden"
+          className="hidden pointer-events-none"
           accept=".jpg,.jpeg,.png,.gif,.doc,.docx,.xls,.xlsx,.pdf,.zip,.rar"
           onChange={handleFileChange}
         />
