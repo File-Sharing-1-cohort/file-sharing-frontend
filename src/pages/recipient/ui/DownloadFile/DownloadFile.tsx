@@ -94,7 +94,7 @@ const DownloadFile = () => {
     let loaded = 0;
 
     try {
-      const url = `${import.meta.env.VITE_BASE_API_URL}files/${fileId}`;
+      const url = `${import.meta.env.VITE_BASE_API_URL}files/${fileId}?password=${encodeURIComponent(password)}`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {
