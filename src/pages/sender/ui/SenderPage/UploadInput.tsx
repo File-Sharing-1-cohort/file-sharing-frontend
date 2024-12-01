@@ -6,7 +6,7 @@ import error from '@/shared/ui/icons/error.svg';
 import alertYellow from '@/shared/ui/icons/alert-yellow.svg';
 
 interface UploadFileProps {
-  onUploadProgress: (progress: number) => void;
+  onUploadProgress?: (progress: number) => void;
   onFileChange: (files: File[]) => void;
 }
 
@@ -14,110 +14,107 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const acceptedFileTypes = [
-    'image/jpeg',
-    'image/png',
-    'image/gif',
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'application/zip',
-    'application/vnd.rar',
-    'application/x-rar-compressed',
+  const acceptedExtensions = [
+    'jpg',
+    'jpeg',
+    'png',
+    'gif',
+    'pdf',
+    'doc',
+    'docx',
+    'xls',
+    'xlsx',
+    'zip',
+    'rar',
   ];
-
   const MAX_FILE_SIZE = 50 * 1024 * 1024;
+
+  const validateFile = (file: File): string | null => {
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    if (!fileExtension || !acceptedExtensions.includes(fileExtension)) {
+      return 'The selected file format is not supported.';
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      const message = `To download files larger than 50 MB, you need to compress them`;
+      toast.custom(
+        () => (
+          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-yellow border rounded-lg shadow-lg">
+            <div className="flex start gap-2">
+              <img src={alertYellow} alt="alertYellow" />
+              <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+                Too big size
+              </h4>
+            </div>
+            <div className="px-3 mt-2 text-customBlack">{message}</div>
+            <div className="flex end gap-6 mt-4 space-x-2">
+              <button
+                onClick={() => toast.dismiss()}
+                className="px-4 py-2 border border-customYellow text-customGray bg-transparent rounded"
+              >
+                Exit
+              </button>
+              <button
+                onClick={() => toast.dismiss()}
+                className="px-4 py-2 text-customGray bg-customYellow rounded"
+              >
+                Compress file
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          duration: 3000,
+          position: 'top-center',
+          className: 'fixed left-1/2 transform -translate-x-1/2',
+        },
+      );
+      return 'File size exceeds 50 MB.';
+    }
+    return null;
+  };
 
   const handleDrop = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
       setIsDragging(false);
-      const newFiles = Array.from(event.dataTransfer.files);
 
-      if (newFiles.length === 0) {
+      const files = Array.from(event.dataTransfer.files);
+      if (files.length === 0) {
         const message = 'No files selected';
-        setErrorMessage(message);
         toast.error(message);
         return;
       }
 
-      const validFiles = newFiles.filter(file => {
-        if (file.size > MAX_FILE_SIZE) {
-          const message = `To download files larger than 50 MB, you need to compress them`;
-          toast.custom(
-            () => (
-              <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-yellow border rounded-lg shadow-lg">
-                <div className="flex start gap-2">
-                  <img src={alertYellow} alt="alertYellow" />
-                  <h4 className="font-semibold text-customGray text-[24px] font-[600]">
-                    Too big size
-                  </h4>
-                </div>
-                <div className="px-3 mt-2 text-customBlack">{message}</div>
-                <div className="flex end gap-6 mt-4 space-x-2">
-                  <button
-                    onClick={() => {
-                      toast.dismiss();
-                    }}
-                    className="px-4 py-2 border border-customYellow text-customGray bg-transparent rounded"
-                  >
-                    Exit
-                  </button>
-                  <button
-                    onClick={() => {
-                      toast.dismiss();
-                    }}
-                    className="px-4 py-2 text-customGray bg-customYellow rounded"
-                  >
-                    Compress file
-                  </button>
-                </div>
-              </div>
-            ),
-            {
-              duration: 3000,
-              position: 'top-center',
-              className: `
-                fixed left-1/2 transform -translate-x-1/2
-              `,
-            },
-          );
-
-          return false;
-        }
-
-        return acceptedFileTypes.includes(file.type);
+      const errors: string[] = [];
+      const validFiles = files.filter(file => {
+        const error = validateFile(file);
+        if (error) errors.push(error);
+        return !error;
       });
 
-      if (validFiles.length === 0) {
+      if (errors.length > 0) {
         const message =
-          'The selected file format is not supported. The acceptable types of files include: jpg, jpeg, png, gif, doc, docx, xls, xlsx, pdf, zip, rar. Or size is to big';
+          'The selected file format is not supported. Supported formats: jpg, jpeg, png, gif, doc, docx, xls, xlsx, pdf, zip, rar.';
         toast.custom(
           () => (
             <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
               <div className="flex start gap-2">
                 <img src={error} alt="error" />
                 <h4 className="font-semibold text-customGray text-[24px] font-[600]">
-                  An error occurred while uploading the file
+                  File upload error
                 </h4>
               </div>
               <div className="px-3 mt-2 text-customBlack">{message}</div>
               <div className="flex end gap-6 mt-4 space-x-2">
                 <button
-                  onClick={() => {
-                    toast.dismiss();
-                  }}
-                  className="px-4 py-2 text-[20px] border border-customRed text-customGray font-[400] bg-transparent rounded"
+                  onClick={() => toast.dismiss()}
+                  className="px-4 py-2 border border-customRed text-customGray bg-transparent rounded"
                 >
                   Exit
                 </button>
                 <button
-                  onClick={() => {
-                    toast.dismiss();
-                  }}
-                  className="px-4 py-2 text-[20px] font-[400] text-white bg-customRed rounded"
+                  onClick={() => toast.dismiss()}
+                  className="px-4 py-2 text-white bg-customRed rounded"
                 >
                   Select another file
                 </button>
@@ -127,78 +124,43 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
           {
             duration: 3000,
             position: 'top-center',
-            className: `
-                fixed left-1/2 transform -translate-x-1/2
-              `,
+            className: 'fixed left-1/2 transform -translate-x-1/2',
           },
         );
-        return;
       }
 
-      onFileChange(validFiles);
-      setErrorMessage(null);
+      if (validFiles.length > 0) {
+        onFileChange(validFiles);
+        setErrorMessage(null);
+      }
     },
     [onFileChange],
   );
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files || files.length === 0) {
-      const message = 'No files selected';
-      toast.custom(
-        () => (
-          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
-            <div className="flex start gap-2">
-              <img src={error} alt="error" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600]">
-                An error occurred while uploading the file
-              </h4>
-            </div>
-            <div className="px-3 mt-2 text-customBlack">{message}</div>
-            <div className="flex end gap-6  mt-4 space-x-2">
-              <button
-                onClick={() => {
-                  toast.dismiss();
-                }}
-                className="px-4 py-2 text-[20px] border border-customRed text-customGray font-[400] bg-transparent rounded"
-              >
-                Exit
-              </button>
-              <button
-                onClick={() => {
-                  toast.dismiss();
-                }}
-                className="px-4 py-2 text-[20px] font-[400] text-white bg-customRed rounded"
-              >
-                Select file
-              </button>
-            </div>
-          </div>
-        ),
-        {
-          duration: 3000,
-          position: 'top-center',
-          className: `
-                fixed left-1/2 transform -translate-x-1/2
-              `,
-        },
-      );
+    const files = Array.from(event.target.files || []);
+    if (files.length === 0) {
+      toast.error('No files selected');
       return;
     }
 
-    const validFiles = Array.from(files).filter(file =>
-      acceptedFileTypes.includes(file.type),
-    );
-    if (validFiles.length === 0) {
-      const message =
-        'The selected file format is not supported. The acceptable types of files include: jpg, jpeg, png, gif, doc, docx, xls, xlsx, pdf, zip, rar. Or size is to big';
-      setErrorMessage(message);
+    const errors: string[] = [];
+    const validFiles = files.filter(file => {
+      const error = validateFile(file);
+      if (error) errors.push(error);
+      return !error;
+    });
+
+    if (errors.length > 0) {
+      const message = 'Some files have unsupported formats or sizes.';
       toast.error(message);
-      return;
+      setErrorMessage(message);
     }
 
-    onFileChange(validFiles);
-    setErrorMessage(null);
+    if (validFiles.length > 0) {
+      onFileChange(validFiles);
+      setErrorMessage(null);
+    }
   };
 
   const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
