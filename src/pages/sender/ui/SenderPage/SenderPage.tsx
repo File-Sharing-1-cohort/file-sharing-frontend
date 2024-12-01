@@ -173,7 +173,7 @@ const SenderPage: React.FC = () => {
 
   const uploadFileWithProgress = (formData: FormData) => {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', `${import.meta.env.VITE_BASE_API_URL}/files`, true);
+    xhr.open('POST', `${import.meta.env.VITE_BASE_API_URL}files`, true);
 
     xhr.upload.onprogress = event => {
       if (event.lengthComputable) {
