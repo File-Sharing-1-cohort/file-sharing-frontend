@@ -32,8 +32,8 @@ const DownloadFile = () => {
   const fetchFileMetadata = async (password?: string) => {
     try {
       const url = password
-        ? `${import.meta.env.VITE_BASE_API_URL}/files/metadata/${fileId}?password=${encodeURIComponent(password)}`
-        : `${import.meta.env.VITE_BASE_API_URL}/files/metadata/${fileId}`;
+        ? `${import.meta.env.VITE_BASE_API_URL}files/metadata/${fileId}?password=${encodeURIComponent(password)}`
+        : `${import.meta.env.VITE_BASE_API_URL}files/metadata/${fileId}`;
 
       const response = await fetch(url);
 
@@ -94,7 +94,7 @@ const DownloadFile = () => {
     let loaded = 0;
 
     try {
-      const url = `${import.meta.env.VITE_BASE_API_URL}/files/${fileId}`;
+      const url = `${import.meta.env.VITE_BASE_API_URL}files/${fileId}`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {
