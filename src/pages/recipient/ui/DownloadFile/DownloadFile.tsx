@@ -11,6 +11,7 @@ import eye from '@/shared/ui/icons/eye-open.svg';
 import eyeClosed from '@/shared/ui/icons/eye-close.svg';
 import lock from '@/shared/ui/icons/lock.svg';
 import btnDownload from '@/shared/ui/icons/download-icon.svg';
+import success from '@/shared/ui/icons/alert-success.svg';
 
 const DownloadFile = () => {
   const { fileId } = useParams<{ fileId: string }>();
@@ -131,7 +132,46 @@ const DownloadFile = () => {
       a.remove();
       URL.revokeObjectURL(downloadUrl);
 
-      toast.success('Download completed!');
+      toast.custom(
+        () => (
+          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-success border rounded-lg shadow-lg">
+            <div className="flex start gap-2">
+              <img src={success} alt="success" />
+              <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+                File downloaded successfully
+              </h4>
+            </div>
+            <div className="px-3 start mt-2 text-customBlack">
+              You have successfully downloaded files
+            </div>
+            <div className="flex end gap-6  mt-4 space-x-2">
+              <button
+                onClick={() => {
+                  toast.dismiss();
+                }}
+                className="px-4 py-2 border border-customGreen text-customGray bg-transparent rounded"
+              >
+                Exit
+              </button>
+              <button
+                onClick={() => {
+                  toast.dismiss();
+                }}
+                className="px-4 py-2 text-[20px] font-[400] text-white bg-customGreen rounded"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          duration: 3000,
+          position: 'top-center',
+          className: `
+                fixed left-1/2 transform -translate-x-1/2
+              `,
+        },
+      );
       setIsLoading(false);
     } catch (error) {
       console.error('Download error:', error);
