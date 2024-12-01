@@ -14,7 +14,10 @@ const FaqPage = () => {
         Frequently Asked Questions
       </h1>
 
-      <Accordion className="text-[20px] flex flex-col gap-4 mb-8" type="multiple">
+      <Accordion
+        className="text-[20px] flex flex-col gap-4 mb-8"
+        type="multiple"
+      >
         {faqDto.map(({ title, description, slug }) => (
           <AccordionItem
             key={slug}
