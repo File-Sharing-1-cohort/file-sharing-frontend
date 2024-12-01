@@ -26,17 +26,20 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
     }
   }, [isOpen]);
 
-  const validatePassword = () => {
-    if (password.length > 0 && (password.length < 1 || password.length > 30)) {
+  const validatePassword = (newPassword: string) => {
+    if (newPassword.length < 1) {
       setErrorMessage('Password must be between 1 and 30 characters');
+    } else if (newPassword.length > 30) {
+      setErrorMessage('Password must be less than 30 characters');
     } else {
       setErrorMessage('');
     }
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-    validatePassword();
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    validatePassword(newPassword);
   };
 
   const handleSave = () => {
@@ -73,7 +76,7 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
             />
             <img
               onClick={() => setShowPassword(prev => !prev)}
-              src={showPassword ? eyeClosed : eye}
+              src={showPassword ? eye : eyeClosed}
               alt="Toggle visibility"
               className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
             />

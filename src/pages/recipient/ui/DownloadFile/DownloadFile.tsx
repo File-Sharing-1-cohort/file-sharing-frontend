@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Input } from '@/shared/ui';
+import { Progress } from '@/shared/ui';
+import { FolderDownload } from '@/shared/ui/LoadingComponent';
 import download from '@/shared/ui/icons/download-img.svg';
 import compress from '@/shared/ui/icons/compress-img.svg';
 import share from '@/shared/ui/icons/share-img.svg';
@@ -22,8 +24,10 @@ const DownloadFile = () => {
     fileSize: string;
     loadedAt: string;
   } | null>(null);
+  const [downloadProgress, setDownloadProgress] = useState(0);
   const [isSelected, setIsSelected] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchFileMetadata = async (password?: string) => {
     try {
@@ -80,6 +84,15 @@ const DownloadFile = () => {
   };
 
   const downloadFile = async () => {
+    setIsLoading(true);
+    if (!metadata?.fileSize) {
+      toast.error('File size information is missing.');
+      return;
+    }
+
+    const totalSize = parseInt(metadata.fileSize, 10);
+    let loaded = 0;
+
     try {
       const url = `${import.meta.env.VITE_BASE_API_URL}files/${fileId}?password=${encodeURIComponent(password)}`;
       const response = await fetch(url, {
@@ -89,25 +102,40 @@ const DownloadFile = () => {
         },
       });
 
-      if (response.ok) {
-        const fileLink = response.url;
-        window.location.href = fileLink;
-        toast.success('Download started!');
-      } else {
-        const errorText = await response.text();
-        console.log('Error response:', errorText);
+      if (!response.body) {
+        throw new Error('ReadableStream not supported.');
+      }
 
-        if (errorText.includes('Incorrect password')) {
-          setErrorMessage('Incorrect password, please try again.');
-        } else {
-          setErrorMessage('An unknown error occurred.');
+      const reader = response.body.getReader();
+      const chunks: Uint8Array[] = [];
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        if (value) {
+          loaded += value.length;
+          chunks.push(value);
+          setDownloadProgress(Math.round((loaded / totalSize) * 100));
         }
       }
+
+      const blob = new Blob(chunks);
+      const downloadUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = metadata.originalFileName || 'downloaded-file';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(downloadUrl);
+
+      toast.success('Download completed!');
+      setIsLoading(false);
     } catch (error) {
       console.error('Download error:', error);
-      toast.error(
-        'Error while downloading the file. Please check the password or try again.',
-      );
+      toast.error('An error occurred during the download.');
     }
   };
 
@@ -135,38 +163,47 @@ const DownloadFile = () => {
 
   return (
     <section className="flex flex-col gap-4 items-center w-screen p-10">
-      {metadata && (
-        <div className="flex flex-col items-center gap-6 w-full p-6">
-          <h1 className="text-2xl font-bold">
-            Document package from{' '}
-            {metadata?.loadedAt ? formatDate(metadata.loadedAt) : 'N/A'}
-          </h1>
+      {isLoading ? (
+        <>
+          {downloadProgress > 0 && <Progress value={downloadProgress} />}
+          <FolderDownload />
+        </>
+      ) : (
+        metadata && (
+          <div className="flex flex-col items-center gap-6 w-full p-6">
+            <h1 className="text-2xl font-bold">
+              Document package from{' '}
+              {metadata?.loadedAt ? formatDate(metadata.loadedAt) : 'N/A'}
+            </h1>
 
-          <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
-            <div className="font-bold">File Name</div>
-            <div className="font-bold">Size (MB)</div>
-            <div className="font-bold">Selected ({isSelected ? 1 : 0})</div>
+            <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
+              <div className="font-bold">File Name</div>
+              <div className="font-bold">Size (MB)</div>
+              <div className="font-bold">Selected ({isSelected ? 1 : 0})</div>
 
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={isSelected}
-                onChange={handleCheckboxChange}
-              />
-              <span>{metadata.originalFileName}</span>
-            </div>
-            <div>{bytesToMegabytes(Number(metadata.fileSize))} MB</div>
-            <div
-              onClick={downloadFile}
-              className={`flex gap-2 border-b-2 border-customLightBlue ${!isSelected ? 'opacity-50 cursor-not-allowed' : ''}`}
-            >
-              <button className="text-customLightBlue" disabled={!isSelected}>
-                Download
-              </button>
-              <img src={btnDownload} alt="btnDownload" />
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={isSelected}
+                  onChange={handleCheckboxChange}
+                />
+                <span>{metadata.originalFileName}</span>
+              </div>
+              <div>{bytesToMegabytes(Number(metadata.fileSize))} MB</div>
+              <div
+                onClick={downloadFile}
+                className={`flex gap-2 border-b-2 border-customLightBlue ${
+                  !isSelected ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                <button className="text-customLightBlue" disabled={!isSelected}>
+                  Download
+                </button>
+                <img src={btnDownload} alt="btnDownload" />
+              </div>
             </div>
           </div>
-        </div>
+        )
       )}
 
       {isModalOpen && (
@@ -189,7 +226,7 @@ const DownloadFile = () => {
                 />
                 <img
                   onClick={() => setShowPassword(prev => !prev)}
-                  src={showPassword ? eyeClosed : eye}
+                  src={showPassword ? eye : eyeClosed}
                   alt="Toggle visibility"
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
                 />
