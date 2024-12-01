@@ -89,16 +89,16 @@ const DownloadFile = () => {
     const loadedDate = new Date(loadedAt);
     loadedDate.setHours(loadedDate.getHours() + expirationHours);
     const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  };
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    };
 
     return loadedDate.toLocaleDateString('en-GB', options);
-  }
+  };
 
   const downloadFile = async () => {
     setIsLoading(true);
@@ -230,13 +230,14 @@ const DownloadFile = () => {
             <h1 className="text-2xl font-bold">
               Document package from{' '}
               {metadata?.loadedAt ? formatDate(metadata.loadedAt) : 'N/A'}
-              </h1>
-              
-              {metadata?.loadedAt && metadata?.expirationHours && (
-                <p className="text-lg text-customRed">
-                  available till: {expirationTime(metadata.loadedAt, metadata.expirationHours)}
-                </p>
-              )}
+            </h1>
+
+            {metadata?.loadedAt && metadata?.expirationHours && (
+              <p className="text-lg text-customRed">
+                available till:{' '}
+                {expirationTime(metadata.loadedAt, metadata.expirationHours)}
+              </p>
+            )}
 
             <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
               <div className="font-bold">File Name</div>
