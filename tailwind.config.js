@@ -13,6 +13,12 @@ export default {
           'linear-gradient(180deg, #F6F6F6 0%, #F4FAFF 50%, #EEF5FF 100%)',
         'gradient-faq':
           'linear-gradient(180deg, rgba(123, 179, 241, 0.15) 0%, rgba(186, 219, 255, 0.15) 52.5%, rgba(123, 179, 241, 0.15) 100%);',
+        'toast-success': `linear-gradient(0deg, #FFFFFF, #FFFFFF),
+        linear-gradient(0deg, rgba(118, 202, 102, 0.15), rgba(118, 202, 102, 0.15))`,
+        'toast-yellow': `linear-gradient(0deg, #FFFFFF, #FFFFFF),linear-gradient(0deg, rgba(255, 207, 177, 0.25), rgba(255, 207, 177, 0.25));`,
+        'toast-alert': `linear-gradient(0deg, #FFFFFF, #FFFFFF),linear-gradient(0deg, rgba(123, 179, 241, 0.15), rgba(123, 179, 241, 0.15));`,
+        'toast-error': `linear-gradient(0deg, #FFFFFF, #FFFFFF),
+        linear-gradient(0deg, rgba(254, 81, 81, 0.15), rgba(254, 81, 81, 0.15));`,
       },
       screens: {
         '2xl': '1440px',
@@ -34,10 +40,6 @@ export default {
         customGray: '#404244',
         customBlue: '#A0C3FF',
         customBlack: '#121212',
-        'toast-success': '#76CA6626',
-        'toast-yellow': '#FFCFB140',
-        'toast-alert': '#7BB3F126',
-        'toast-error': 'rgba(254, 81, 81, 0.15)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
