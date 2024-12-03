@@ -368,7 +368,7 @@ const SenderPage: React.FC = () => {
         )}
 
         <h1 className="text-[48px] text-center">
-          Fast file sharing without registration and restrictions
+          Fast file sharing without registration
         </h1>
         {isLoading ? (
           <FolderDownload />
