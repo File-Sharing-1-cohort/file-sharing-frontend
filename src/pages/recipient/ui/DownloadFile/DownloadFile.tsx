@@ -10,7 +10,7 @@ import share from '@/shared/ui/icons/share-img.svg';
 import eye from '@/shared/ui/icons/eye-open.svg';
 import eyeClosed from '@/shared/ui/icons/eye-close.svg';
 import lock from '@/shared/ui/icons/lock.svg';
-import btnDownload from '@/shared/ui/icons/download-icon.svg';
+// import btnDownload from '@/shared/ui/icons/download-icon.svg';
 import success from '@/shared/ui/icons/alert-success.svg';
 import errorIcon from '@/shared/ui/icons/error.svg';
 
@@ -28,8 +28,8 @@ const DownloadFile = () => {
     expirationHours: number;
   } | null>(null);
   const [downloadProgress, setDownloadProgress] = useState(0);
-  const [isSelected, setIsSelected] = useState(false);
-  const [selectedCount, setSelectedCount] = useState(0);
+  // const [isSelected, setIsSelected] = useState(false);
+  // const [selectedCount, setSelectedCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchFileMetadata = async (password?: string) => {
@@ -61,15 +61,15 @@ const DownloadFile = () => {
     }
   };
 
-  const bytesToMegabytes = (bytes: number): string => {
-    return (bytes / (1024 * 1024)).toFixed(2);
-  };
+  // const bytesToMegabytes = (bytes: number): string => {
+  //   return (bytes / (1024 * 1024)).toFixed(2);
+  // };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked;
-    setIsSelected(checked);
-    setSelectedCount(checked ? selectedCount + 1 : selectedCount - 1);
-  };
+  // const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const checked = e.target.checked;
+  //   // setIsSelected(checked);
+  //   setSelectedCount(checked ? selectedCount + 1 : selectedCount - 1);
+  // };
 
   const formatDate = (isoDate: string): string => {
     const date = new Date(isoDate);
@@ -247,6 +247,12 @@ const DownloadFile = () => {
     }
   };
 
+useEffect(() => {
+  if (fileId && metadata) {
+    downloadFile();
+  }
+}, [fileId, metadata]);
+
   useEffect(() => {
     if (!fileId) {
       toast.error('Invalid or missing file ID.');
@@ -277,9 +283,11 @@ const DownloadFile = () => {
                 available till:{' '}
                 {expirationTime(metadata.loadedAt, metadata.expirationHours)}
               </p>
-            )}
+              )}
+              
+              <FolderDownload />
 
-            <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
+            {/* <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
               <div className="font-bold">File Name</div>
               <div className="font-bold">Size (MB)</div>
               <div className="font-bold">Selected ({isSelected ? 1 : 0})</div>
@@ -304,7 +312,7 @@ const DownloadFile = () => {
                 </button>
                 <img src={btnDownload} alt="btnDownload" />
               </div>
-            </div>
+            </div> */}
           </div>
         )
       )}
