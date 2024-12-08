@@ -247,11 +247,11 @@ const DownloadFile = () => {
     }
   };
 
-useEffect(() => {
-  if (fileId && metadata) {
-    downloadFile();
-  }
-}, [fileId, metadata]);
+  useEffect(() => {
+    if (fileId && metadata) {
+      downloadFile();
+    }
+  }, [fileId, metadata]);
 
   useEffect(() => {
     if (!fileId) {
@@ -283,9 +283,9 @@ useEffect(() => {
                 available till:{' '}
                 {expirationTime(metadata.loadedAt, metadata.expirationHours)}
               </p>
-              )}
-              
-              <FolderDownload />
+            )}
+
+            <FolderDownload />
 
             {/* <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
               <div className="font-bold">File Name</div>
