@@ -63,32 +63,32 @@ const SenderPage: React.FC = () => {
       toast.loading('Uploading files...', { id: toastId });
 
       try {
-          const formData = new FormData();
-          selectedFiles.forEach((file) => {
-              console.log("Appending file:", file);
-              formData.append('files', file);
-            });
+        const formData = new FormData();
+        selectedFiles.forEach(file => {
+          console.log('Appending file:', file);
+          formData.append('files', file);
+        });
 
-            if (password) {
-              formData.append('password', password);
+        if (password) {
+          formData.append('password', password);
+        }
+
+        formData.append('isCompressionNeeded', 'false');
+        formData.append('expirationHours', '36');
+
+        console.log('FormData:', [...formData.entries()]);
+        setIsLoading(true);
+        uploadFileWithProgress(formData);
+        const response = await uploadFile(formData).unwrap();
+        console.log('ServerResponse:', response);
+        if (Array.isArray(response) && response.length > 0) {
+          response.forEach(item => {
+            if (item.id) {
+              setFileId(item.id);
+              console.log('File ID:', item.id);
             }
-
-          formData.append('isCompressionNeeded', 'false');
-          formData.append('expirationHours', '36');
-
-          console.log('FormData:', [...formData.entries()]);
-          setIsLoading(true);
-          uploadFileWithProgress(formData);
-          const response = await uploadFile(formData).unwrap();
-          console.log('ServerResponse:', response);
-          if (Array.isArray(response) && response.length > 0) {
-            response.forEach(item => {
-              if (item.id) {
-                setFileId(item.id);
-                console.log('File ID:', item.id);
-              }
-            });
-          }
+          });
+        }
         toast.success('Files uploaded successfully!', {
           id: toastId,
           duration: 1000,
