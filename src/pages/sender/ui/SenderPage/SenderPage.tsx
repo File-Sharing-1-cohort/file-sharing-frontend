@@ -73,8 +73,8 @@ const SenderPage: React.FC = () => {
           formData.append('password', password);
         }
 
-        formData.append('isCompressionNeeded', 'false');
-        formData.append('expirationHours', '36');
+        formData.append('toCompress', 'false');
+        formData.append('expirationHours', '24');
 
         console.log('FormData:', [...formData.entries()]);
         setIsLoading(true);
