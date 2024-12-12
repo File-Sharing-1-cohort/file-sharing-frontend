@@ -69,11 +69,19 @@ const SenderPage: React.FC = () => {
           formData.append('files', file);
         });
 
+        const totalSize = selectedFiles.reduce(
+          (sum, file) => sum + file.size,
+          0,
+        );
+        formData.append(
+          'toCompress',
+          totalSize > MAX_TOTAL_SIZE ? 'true' : 'false',
+        );
+
         if (password) {
           formData.append('password', password);
         }
 
-        formData.append('toCompress', 'false');
         formData.append('expirationHours', '24');
 
         console.log('FormData:', [...formData.entries()]);
@@ -311,6 +319,7 @@ const SenderPage: React.FC = () => {
               </button>
               <button
                 onClick={() => {
+                  setSelectedFiles(prevFiles => [...prevFiles, ...files]);
                   toast.dismiss();
                 }}
                 className="px-4 py-2 text-customGray bg-customYellow rounded"
@@ -328,10 +337,9 @@ const SenderPage: React.FC = () => {
               `,
         },
       );
-      return;
+    } else {
+      setSelectedFiles(prevFiles => [...prevFiles, ...files]);
     }
-
-    setSelectedFiles(prevFiles => [...prevFiles, ...files]);
   };
 
   return (
