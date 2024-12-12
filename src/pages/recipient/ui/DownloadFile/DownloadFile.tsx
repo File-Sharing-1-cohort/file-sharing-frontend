@@ -242,7 +242,7 @@ const DownloadFile = () => {
     if (password) {
       if (!metadata) {
         await fetchFileMetadata(password);
-      } 
+      }
       if (!isLoading) {
         downloadFile();
       }

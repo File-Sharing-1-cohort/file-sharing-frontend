@@ -69,13 +69,19 @@ const SenderPage: React.FC = () => {
           formData.append('files', file);
         });
 
-        const totalSize = selectedFiles.reduce((sum, file) => sum + file.size, 0);
-        formData.append('toCompress', totalSize > MAX_TOTAL_SIZE ? 'true' : 'false'); 
+        const totalSize = selectedFiles.reduce(
+          (sum, file) => sum + file.size,
+          0,
+        );
+        formData.append(
+          'toCompress',
+          totalSize > MAX_TOTAL_SIZE ? 'true' : 'false',
+        );
 
         if (password) {
           formData.append('password', password);
         }
-        
+
         formData.append('expirationHours', '24');
 
         console.log('FormData:', [...formData.entries()]);
