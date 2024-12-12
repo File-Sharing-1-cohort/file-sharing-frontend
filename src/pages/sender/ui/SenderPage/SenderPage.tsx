@@ -289,7 +289,7 @@ const SenderPage: React.FC = () => {
     );
   };
 
-  const MAX_TOTAL_SIZE = 4 * 1024 * 1024;
+  const MAX_TOTAL_SIZE = 50 * 1024 * 1024;
 
   const handleFileChange = (files: File[]) => {
     const totalSize =
