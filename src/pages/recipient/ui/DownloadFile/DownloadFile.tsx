@@ -102,9 +102,12 @@ const DownloadFile = () => {
   };
 
   const downloadFile = async () => {
+    if (isLoading) return;
     setIsLoading(true);
+
     if (!metadata?.fileSize) {
       toast.error('File size information is missing.');
+      setIsLoading(false);
       return;
     }
 
@@ -239,7 +242,8 @@ const DownloadFile = () => {
     if (password) {
       if (!metadata) {
         await fetchFileMetadata(password);
-      } else {
+      } 
+      if (!isLoading) {
         downloadFile();
       }
     } else {
