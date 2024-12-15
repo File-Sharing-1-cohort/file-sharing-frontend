@@ -24,7 +24,7 @@ export default {
       },
       fontFamily: {
         libre: ['Libre Franklin', 'sans-serif'],
-        mallana: ['Mallanna', 'sans-serif']
+        mallana: ['Mallanna', 'sans-serif'],
       },
       fontSize: {
         title: '2.5rem',

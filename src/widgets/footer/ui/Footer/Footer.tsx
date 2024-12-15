@@ -21,7 +21,9 @@ const Footer: FC<TFooterProps> = () => {
           </Link>
         </Button>
       </div>
-      <div className="font-mallana text-center mt-10">Copyright &copy; 2024 - File Sharing</div>
+      <div className="font-mallana text-center mt-10">
+        Copyright &copy; 2024 - File Sharing
+      </div>
     </footer>
   );
 };

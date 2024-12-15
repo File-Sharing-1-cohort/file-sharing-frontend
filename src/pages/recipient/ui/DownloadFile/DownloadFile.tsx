@@ -330,7 +330,9 @@ const DownloadFile = () => {
               </h2>
             </div>
             <div className="w-full px-20">
-              <span className="font-mallana text-customGrayLight text-[16px]">Password</span>
+              <span className="font-mallana text-customGrayLight text-[16px]">
+                Password
+              </span>
               <div className="relative">
                 <Input
                   type={showPassword ? 'text' : 'password'}
