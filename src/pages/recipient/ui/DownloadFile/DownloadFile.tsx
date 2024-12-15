@@ -106,7 +106,6 @@ const DownloadFile = () => {
     setIsLoading(true);
 
     if (!metadata?.fileSize) {
-      toast.error('File size information is missing.');
       setIsLoading(false);
       return;
     }
@@ -268,7 +267,7 @@ const DownloadFile = () => {
   }, [fileId, navigate]);
 
   return (
-    <section className="flex flex-col gap-4 items-center w-screen p-10">
+    <section className="flex flex-col gap-4 items-center container py-20">
       {isLoading ? (
         <>
           {downloadProgress > 0 && <Progress value={downloadProgress} />}
@@ -276,14 +275,14 @@ const DownloadFile = () => {
         </>
       ) : (
         metadata && (
-          <div className="flex flex-col items-center gap-6 w-full p-6">
-            <h1 className="text-2xl font-bold">
+          <div className="flex flex-col items-center gap-5 w-full p-6">
+            <h1 className="font-libre text-[48px] font-[500] text-customGray">
               Document package from{' '}
               {metadata?.loadedAt ? formatDate(metadata.loadedAt) : 'N/A'}
             </h1>
 
             {metadata?.loadedAt && metadata?.expirationHours && (
-              <p className="text-lg text-customRed">
+              <p className="font-mallana text-[20px] text-customRedLight">
                 available till:{' '}
                 {expirationTime(metadata.loadedAt, metadata.expirationHours)}
               </p>
@@ -323,15 +322,15 @@ const DownloadFile = () => {
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="flex flex-col items-center gap-10 gradient-modal p-6 rounded-lg shadow-lg w-[620px]">
-            <div className="flex justify-center gap-2">
+          <div className="flex flex-col items-center gap-16 gradient-modal p-9 rounded-lg shadow-lg w-[620px]">
+            <div className="flex self-start items-center gap-2">
               <img src={lock} alt="lock" />
-              <h2 className="text-[20px] font-[500] text-white">
+              <h2 className="font-libre text-[24px] font-[600] text-white">
                 Insert password
               </h2>
             </div>
             <div className="w-full px-20">
-              <span className="text-white">Password</span>
+              <span className="font-mallana text-customGrayLight text-[16px]">Password</span>
               <div className="relative">
                 <Input
                   type={showPassword ? 'text' : 'password'}
@@ -349,19 +348,19 @@ const DownloadFile = () => {
               {errorMessage ? (
                 <span className="text-[14px] text-red-500">{errorMessage}</span>
               ) : (
-                <span className="text-[14px] text-white">
+                <span className="font-mallana text-customGrayLight text-[14px]">
                   enter the password provided by the sender
                 </span>
               )}
             </div>
-            <div className="flex justify-end gap-3">
+            <div className="flex self-end justify-end gap-3">
               <button
                 type="button"
                 onClick={handlePasswordSubmit}
-                className={`btn-primary ${!password ? 'bg-gray-500 cursor-not-allowed' : 'btn-primary'}`}
+                className={`btn-primary ${!password ? 'bg-customGrayLight text-customGrayDark cursor-not-allowed' : 'btn-primary bg-white text-customGray'}`}
                 disabled={!password}
               >
-                Submit
+                Enter
               </button>
             </div>
           </div>

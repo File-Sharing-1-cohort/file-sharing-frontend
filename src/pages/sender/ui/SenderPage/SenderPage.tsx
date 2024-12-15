@@ -389,7 +389,7 @@ const SenderPage: React.FC = () => {
           Fast file sharing without registration
         </h1>
         {isLoading ? (
-          <FolderDownload />
+          <FolderDownload title={'Uploading'} description={'This may take a few seconds'} />
         ) : (
           <UploadFile
             onUploadProgress={handleUploadProgress}

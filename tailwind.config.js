@@ -22,6 +22,10 @@ export default {
         '2xl': '1440px',
         lg: '1040px',
       },
+      fontFamily: {
+        libre: ['Libre Franklin', 'sans-serif'],
+        mallana: ['Mallanna', 'sans-serif']
+      },
       fontSize: {
         title: '2.5rem',
       },
@@ -34,7 +38,11 @@ export default {
         customLightBlue: '#116ACC',
         customGreen: '#76CA66',
         customYellow: '#FBC756',
+        customFaq: '#041D39',
+        customRedLight: '#C31717',
         customRed: '#8A0000',
+        customGrayLight: '#E8E9EB',
+        customGrayDark: '#AFB3B8',
         customGray: '#404244',
         customBlue: '#A0C3FF',
         customBlack: '#121212',

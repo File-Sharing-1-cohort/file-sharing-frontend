@@ -11,7 +11,7 @@ const Footer: FC<TFooterProps> = () => {
       <div className="flex justify-between items-center">
         <Button asChild variant="link">
           <Link to="/faq">
-            <span className="text-[20px]">FAQ</span>
+            <span className="font-mallana text-customFaq text-[20px]">FAQ</span>
           </Link>
         </Button>
 
@@ -21,7 +21,7 @@ const Footer: FC<TFooterProps> = () => {
           </Link>
         </Button>
       </div>
-      <div className="text-center mt-10">Copyright&copy; 2024 File Sharing</div>
+      <div className="font-mallana text-center mt-10">Copyright &copy; 2024 - File Sharing</div>
     </footer>
   );
 };
