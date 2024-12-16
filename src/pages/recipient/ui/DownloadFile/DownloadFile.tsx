@@ -362,7 +362,7 @@ const DownloadFile = () => {
                 className={`btn-primary ${!password ? 'bg-customGrayLight text-customGrayDark cursor-not-allowed' : 'btn-primary bg-white text-customGray'}`}
                 disabled={!password}
               >
-                Enter
+                Submit
               </button>
             </div>
           </div>
