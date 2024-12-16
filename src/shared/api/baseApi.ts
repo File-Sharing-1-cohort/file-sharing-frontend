@@ -11,14 +11,14 @@ interface FileData {
 const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_BASE_API_URL}`,
+    baseUrl: `${import.meta.env.VITE_BASE_API_URL}/`,
   }),
   endpoints: build => ({
     checkApi: build.query<string, void>({ query: () => 'ping' }),
     getLogo: build.query<string, void>({ query: () => 'public/logo' }),
     uploadFile: build.mutation<FileData, FormData>({
       query: formData => ({
-        url: '/files',
+        url: 'files',
         method: 'POST',
         body: formData,
       }),
