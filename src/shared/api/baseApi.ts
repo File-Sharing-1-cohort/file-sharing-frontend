@@ -18,7 +18,7 @@ const baseApi = createApi({
     getLogo: build.query<string, void>({ query: () => 'public/logo' }),
     uploadFile: build.mutation<FileData, FormData>({
       query: formData => ({
-        url: 'files',
+        url: '/files',
         method: 'POST',
         body: formData,
       }),
