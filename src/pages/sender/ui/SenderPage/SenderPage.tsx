@@ -139,7 +139,7 @@ const SenderPage: React.FC = () => {
             </div>
           ),
           {
-            duration: 3000,
+            duration: Infinity,
             position: 'top-center',
             className: `
                 fixed left-1/2 transform -translate-x-1/2
@@ -179,7 +179,7 @@ const SenderPage: React.FC = () => {
           </div>
         ),
         {
-          duration: 3000,
+          duration: Infinity,
           position: 'top-center',
           className: `
                 fixed left-1/2 transform -translate-x-1/2
@@ -231,7 +231,7 @@ const SenderPage: React.FC = () => {
           </div>
         ),
         {
-          duration: 3000,
+          duration: Infinity,
           position: 'top-center',
           className: `
                 fixed left-1/2 transform -translate-x-1/2
@@ -330,7 +330,7 @@ const SenderPage: React.FC = () => {
           </div>
         ),
         {
-          duration: 3000,
+          duration: Infinity,
           position: 'top-center',
           className: `
                 fixed left-1/2 transform -translate-x-1/2
