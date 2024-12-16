@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { Input } from '@/shared/ui';
 import { Progress } from '@/shared/ui';
 import { FolderDownload } from '@/shared/ui/LoadingComponent';
+import { LinkInc } from '@/shared/ui/LinkIncorrect';
 import download from '@/shared/ui/icons/download-img.svg';
 import compress from '@/shared/ui/icons/compress-img.svg';
 import share from '@/shared/ui/icons/share-img.svg';
@@ -31,6 +32,7 @@ const DownloadFile = () => {
   // const [isSelected, setIsSelected] = useState(false);
   // const [selectedCount, setSelectedCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const fetchFileMetadata = async (password?: string) => {
     try {
@@ -56,8 +58,8 @@ const DownloadFile = () => {
         throw new Error('Failed to fetch file metadata.');
       }
     } catch (error) {
+      setError(true);
       console.error('Metadata fetch error:', error);
-      toast.error('Could not load file metadata.');
     }
   };
 
@@ -268,57 +270,58 @@ const DownloadFile = () => {
 
   return (
     <section className="flex flex-col gap-4 items-center container py-20">
-      {isLoading ? (
+      {error ? (
+        <LinkInc />
+      ) : isLoading ? (
         <>
           {downloadProgress > 0 && <Progress value={downloadProgress} />}
           <FolderDownload />
         </>
-      ) : (
-        metadata && (
-          <div className="flex flex-col items-center gap-5 w-full p-6">
-            <h1 className="font-libre text-[48px] font-[500] text-customGray">
-              Document package from{' '}
-              {metadata?.loadedAt ? formatDate(metadata.loadedAt) : 'N/A'}
-            </h1>
+      ) : metadata ? (
+        <div className="flex flex-col items-center gap-5 w-full p-6">
+          <h1 className="font-libre text-[48px] font-[500] text-customGray">
+            Document package from{' '}
+            {metadata?.loadedAt ? formatDate(metadata.loadedAt) : 'N/A'}
+          </h1>
 
-            {metadata?.loadedAt && metadata?.expirationHours && (
-              <p className="font-mallana text-[20px] text-customRedLight">
-                available till:{' '}
-                {expirationTime(metadata.loadedAt, metadata.expirationHours)}
-              </p>
-            )}
+          {metadata?.loadedAt && metadata?.expirationHours && (
+            <p className="font-mallana text-[20px] text-customRedLight">
+              Available till:{' '}
+              {expirationTime(metadata.loadedAt, metadata.expirationHours)}
+            </p>
+          )}
 
-            <FolderDownload />
+          <FolderDownload />
 
-            {/* <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
-              <div className="font-bold">File Name</div>
-              <div className="font-bold">Size (MB)</div>
-              <div className="font-bold">Selected ({isSelected ? 1 : 0})</div>
+          {/* Якщо потрібна таблиця з файлами */}
+          {/* <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
+            <div className="font-bold">File Name</div>
+            <div className="font-bold">Size (MB)</div>
+            <div className="font-bold">Selected ({isSelected ? 1 : 0})</div>
 
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={isSelected}
-                  onChange={handleCheckboxChange}
-                />
-                <span>{metadata.originalFileName}</span>
-              </div>
-              <div>{bytesToMegabytes(Number(metadata.fileSize))} MB</div>
-              <div
-                onClick={downloadFile}
-                className={`flex gap-2 border-b-2 border-customLightBlue ${
-                  !isSelected ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-              >
-                <button className="text-customLightBlue" disabled={!isSelected}>
-                  Download
-                </button>
-                <img src={btnDownload} alt="btnDownload" />
-              </div>
-            </div> */}
-          </div>
-        )
-      )}
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={isSelected}
+                onChange={handleCheckboxChange}
+              />
+              <span>{metadata.originalFileName}</span>
+            </div>
+            <div>{bytesToMegabytes(Number(metadata.fileSize))} MB</div>
+            <div
+              onClick={downloadFile}
+              className={`flex gap-2 border-b-2 border-customLightBlue ${
+                !isSelected ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              <button className="text-customLightBlue" disabled={!isSelected}>
+                Download
+              </button>
+              <img src={btnDownload} alt="btnDownload" />
+            </div>
+          </div> */}
+        </div>
+      ) : null}
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -351,7 +354,7 @@ const DownloadFile = () => {
                 <span className="text-[14px] text-red-500">{errorMessage}</span>
               ) : (
                 <span className="font-mallana text-customGrayLight text-[14px]">
-                  enter the password provided by the sender
+                  Enter the password provided by the sender
                 </span>
               )}
             </div>
@@ -359,20 +362,24 @@ const DownloadFile = () => {
               <button
                 type="button"
                 onClick={handlePasswordSubmit}
-                className={`btn-primary ${!password ? 'bg-customGrayLight text-customGrayDark cursor-not-allowed' : 'btn-primary bg-white text-customGray'}`}
+                className={`btn-primary ${
+                  !password
+                    ? 'bg-customGrayLight text-customGrayDark cursor-not-allowed'
+                    : 'btn-primary bg-white text-customGray'
+                }`}
                 disabled={!password}
               >
                 Submit
               </button>
             </div>
           </div>
-        </div>
+          <div className="flex justify-center items-center gap-10">
+            <img src={download} alt="Download" />
+            <img src={compress} alt="Compress" />
+            <img src={share} alt="Share" />
+          </div>
+        </div>    
       )}
-      <div className="flex justify-center items-center gap-10">
-        <img src={download} alt="Download" />
-        <img src={compress} alt="Compress" />
-        <img src={share} alt="Share" />
-      </div>
     </section>
   );
 };
