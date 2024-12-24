@@ -343,9 +343,9 @@ const SenderPage: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col gap-20">
-      <div className="flex flex-col w-screen h-screen">
-        <div className="flex flex-col gap-4 items-center px-24 py-10">
+    <section className="flex flex-col">
+      <div className="flex flex-col min-h-[calc(100vh-6.25rem)] justify-between">
+        <div className="flex flex-col items-center px-40">
           {uploadProgress !== null && <Progress value={uploadProgress} />}
           {selectedFiles.length > 0 && (
             <div className="flex flex-col items-start w-full px-10">
@@ -388,7 +388,7 @@ const SenderPage: React.FC = () => {
             </div>
           )}
 
-          <h1 className="text-[48px] text-center">
+          <h1 className="text-[48px] text-center p-[46px]">
             Fast file sharing without registration
           </h1>
           {isLoading ? (
@@ -412,7 +412,7 @@ const SenderPage: React.FC = () => {
           />
         )}
 
-        <div className="flex justify-center items-center gap-10">
+        <div className="flex justify-center items-center gap-10 p-10">
           <img src={download} alt="Download" />
           <img src={compress} alt="Compress" />
           <img src={share} alt="Share" />
