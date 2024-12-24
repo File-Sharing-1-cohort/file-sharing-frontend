@@ -378,7 +378,7 @@ const DownloadFile = () => {
             <img src={compress} alt="Compress" />
             <img src={share} alt="Share" />
           </div>
-        </div>    
+        </div>
       )}
     </section>
   );
