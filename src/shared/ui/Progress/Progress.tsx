@@ -38,7 +38,7 @@ const Progress = React.forwardRef<
               ? 'Your data package was uploaded successfully'
               : `${value}%`}
           </span>
-        </ProgressPrimitive.Indicator> 
+        </ProgressPrimitive.Indicator>
       </ProgressPrimitive.Root>
     </div>
   );
