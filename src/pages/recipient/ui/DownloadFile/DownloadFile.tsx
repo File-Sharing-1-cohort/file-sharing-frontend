@@ -269,7 +269,7 @@ const DownloadFile = () => {
   }, [fileId, navigate]);
 
   return (
-    <section className="flex flex-col gap-4 items-center container py-20">
+    <section className="flex flex-col gap-4 items-center container py-20  max-w-1440 mx-auto">
       {error ? (
         <LinkInc />
       ) : isLoading ? (
@@ -373,13 +373,13 @@ const DownloadFile = () => {
               </button>
             </div>
           </div>
-          <div className="flex justify-center items-center gap-10">
-            <img src={download} alt="Download" />
-            <img src={compress} alt="Compress" />
-            <img src={share} alt="Share" />
-          </div>
-        </div>    
+        </div>
       )}
+      <div className="flex justify-center items-center gap-10">
+        <img src={download} alt="Download" />
+        <img src={compress} alt="Compress" />
+        <img src={share} alt="Share" />
+      </div>
     </section>
   );
 };
