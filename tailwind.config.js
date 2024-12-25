@@ -4,6 +4,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      maxWidth: {
+        '1440': '1440px',
+      },
       boxShadow: {
         custom: '0px -8px 15px 0px rgba(170, 170, 170, 0.1)',
         'header-custom': '0px 8px 15px 0px rgba(170, 170, 170, 0.1)',
