@@ -374,10 +374,11 @@ const DownloadFile = () => {
               <button
                 type="button"
                 onClick={handlePasswordSubmit}
-                className={`btn-primary ${!password || btnDisabled
+                className={`btn-primary ${
+                  !password || btnDisabled
                     ? 'bg-customGrayLight text-customGrayDark cursor-not-allowed'
                     : 'btn-primary bg-white text-customGray'
-                  }`}
+                }`}
                 disabled={!password || btnDisabled}
               >
                 Enter
