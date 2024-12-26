@@ -33,6 +33,7 @@ const DownloadFile = () => {
   // const [selectedCount, setSelectedCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(false);
 
   const fetchFileMetadata = async (password?: string) => {
     try {
@@ -53,6 +54,7 @@ const DownloadFile = () => {
         console.log('Error response:', errorText);
         if (errorText.includes('Incorrect password')) {
           setErrorMessage('Incorrect password, please try again.');
+          setBtnDisabled(true);
         }
       } else {
         throw new Error('Failed to fetch file metadata.');
@@ -252,6 +254,16 @@ const DownloadFile = () => {
     }
   };
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+
+    setBtnDisabled(newPassword.trim().length === 0);
+    if (errorMessage) {
+      setErrorMessage('');
+    }
+  };
+
   useEffect(() => {
     if (fileId && metadata) {
       downloadFile();
@@ -269,7 +281,7 @@ const DownloadFile = () => {
   }, [fileId, navigate]);
 
   return (
-    <section className="flex flex-col gap-4 items-center container py-20">
+    <section className="flex flex-col gap-20 items-center container py-20  max-w-1440 mx-auto">
       {error ? (
         <LinkInc />
       ) : isLoading ? (
@@ -324,7 +336,7 @@ const DownloadFile = () => {
       ) : null}
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="flex items-center justify-center">
           <div className="flex flex-col items-center gap-16 gradient-modal p-9 rounded-lg shadow-lg w-[620px]">
             <div className="flex self-start items-center gap-2">
               <img src={lock} alt="lock" />
@@ -341,7 +353,7 @@ const DownloadFile = () => {
                   type={showPassword ? 'text' : 'password'}
                   className={`pr-10 ${errorMessage ? 'bg-[#FE51514D]' : ''}`}
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={handlePasswordChange}
                 />
                 <img
                   onClick={() => setShowPassword(prev => !prev)}
@@ -362,24 +374,22 @@ const DownloadFile = () => {
               <button
                 type="button"
                 onClick={handlePasswordSubmit}
-                className={`btn-primary ${
-                  !password
+                className={`btn-primary ${!password || btnDisabled
                     ? 'bg-customGrayLight text-customGrayDark cursor-not-allowed'
                     : 'btn-primary bg-white text-customGray'
-                }`}
-                disabled={!password}
+                  }`}
+                disabled={!password || btnDisabled}
               >
-                Submit
+                Enter
               </button>
             </div>
           </div>
-          <div className="flex justify-center items-center gap-10">
-            <img src={download} alt="Download" />
-            <img src={compress} alt="Compress" />
-            <img src={share} alt="Share" />
-          </div>
+        )}
+        <div className="flex justify-center items-center gap-10">
+          <img src={download} alt="Download" />
+          <img src={compress} alt="Compress" />
+          <img src={share} alt="Share" />
         </div>
-      )}
     </section>
   );
 };

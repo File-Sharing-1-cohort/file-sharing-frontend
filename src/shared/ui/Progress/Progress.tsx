@@ -25,20 +25,20 @@ const Progress = React.forwardRef<
         {...props}
       >
         <ProgressPrimitive.Indicator
-          className="w-full flex-1 transition-all"
+          className="relative h-full transition-all"
           style={{
-            height: '80px',
-            transform: `translateX(-${100 - (value || 0)}%)`,
+            width: `${value}%`,
             background:
               'linear-gradient(268.07deg, #116ACC -3.08%, #7BB3F1 103.27%)',
             boxShadow: '0px 3px 12px 0px #116ACC26',
           }}
-        />
-        <span className="absolute inset-0 flex items-center justify-center text-[24px] font-[500] text-white">
-          {isCompleted
-            ? 'Your data package was uploaded successfully'
-            : `${value || 0}%`}
-        </span>
+        >
+          <span className="absolute inset-0 flex items-center justify-center text-[24px] font-[500] text-white">
+            {isCompleted
+              ? 'Your data package was uploaded successfully'
+              : `${value}%`}
+          </span>
+        </ProgressPrimitive.Indicator>
       </ProgressPrimitive.Root>
     </div>
   );
