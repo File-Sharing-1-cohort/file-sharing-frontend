@@ -343,78 +343,81 @@ const SenderPage: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col gap-20">
-      <div className="flex flex-col gap-4 items-center px-24 py-10">
-        {uploadProgress !== null && <Progress value={uploadProgress} />}
-        {selectedFiles.length > 0 && (
-          <div className="flex flex-col items-start w-full px-10">
-            <div className="w-full">
-              <ul>
-                {selectedFiles.map(file => (
-                  <li key={file.name}>
-                    <div className="flex justify-between">
-                      <p className="text-[20px]">{file.name}</p>
-                      <p className="text-[20px]">{formatFileSize(file.size)}</p>
-                      <img
-                        className="cursor-pointer"
-                        onClick={() => handleCancelFile(file)}
-                        src={basket}
-                        alt="Remove file"
-                      />
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-4 flex justify-center gap-2">
-              <div
-                onClick={handleToggleSwitch}
-                className={`w-16 h-8 rounded-full cursor-pointer ${isSwitchOn ? 'bg-blue-500' : 'bg-gray-300'} transition-colors`}
-              >
-                <div
-                  className={`w-8 h-8 bg-white rounded-full transition-transform transform ${isSwitchOn ? 'translate-x-8' : 'translate-x-0'}`}
-                />
+    <section className="flex flex-col">
+      <div className="flex flex-col min-h-[calc(100vh-6.25rem)] justify-between">
+        <div className="flex flex-col items-center px-40">
+          {uploadProgress !== null && <Progress value={uploadProgress} />}
+          {selectedFiles.length > 0 && (
+            <div className="flex flex-col items-start w-full px-10">
+              <div className="w-full">
+                <ul>
+                  {selectedFiles.map(file => (
+                    <li key={file.name}>
+                      <div className="flex justify-between">
+                        <p className="text-[20px]">{file.name}</p>
+                        <p className="text-[20px]">
+                          {formatFileSize(file.size)}
+                        </p>
+                        <img
+                          className="cursor-pointer"
+                          onClick={() => handleCancelFile(file)}
+                          src={basket}
+                          alt="Remove file"
+                        />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <span className="text-[20px]">Set password</span>
-            </div>
 
-            <div onClick={handleUploadFile} className="btn-primary end">
-              Save
+              <div className="mt-4 flex justify-center gap-2">
+                <div
+                  onClick={handleToggleSwitch}
+                  className={`w-16 h-8 rounded-full cursor-pointer ${isSwitchOn ? 'bg-blue-500' : 'bg-gray-300'} transition-colors`}
+                >
+                  <div
+                    className={`w-8 h-8 bg-white rounded-full transition-transform transform ${isSwitchOn ? 'translate-x-8' : 'translate-x-0'}`}
+                  />
+                </div>
+                <span className="text-[20px]">Set password</span>
+              </div>
+
+              <div onClick={handleUploadFile} className="btn-primary end">
+                Save
+              </div>
             </div>
-          </div>
+          )}
+
+          <h1 className="text-[48px] text-center p-[46px]">
+            Fast file sharing without registration
+          </h1>
+          {isLoading ? (
+            <FolderDownload
+              title={'Uploading'}
+              description={'This may take a few seconds'}
+            />
+          ) : (
+            <UploadFile
+              onUploadProgress={handleUploadProgress}
+              onFileChange={handleFileChange}
+            />
+          )}
+        </div>
+
+        {isModalOpen && (
+          <ModalPassword
+            onClose={handleCloseModal}
+            onSave={handleSetPassword}
+            isOpen={isModalOpen}
+          />
         )}
 
-        <h1 className="text-[48px] text-center">
-          Fast file sharing without registration
-        </h1>
-        {isLoading ? (
-          <FolderDownload
-            title={'Uploading'}
-            description={'This may take a few seconds'}
-          />
-        ) : (
-          <UploadFile
-            onUploadProgress={handleUploadProgress}
-            onFileChange={handleFileChange}
-          />
-        )}
+        <div className="flex justify-center items-center gap-10 p-10">
+          <img src={download} alt="Download" />
+          <img src={compress} alt="Compress" />
+          <img src={share} alt="Share" />
+        </div>
       </div>
-
-      {isModalOpen && (
-        <ModalPassword
-          onClose={handleCloseModal}
-          onSave={handleSetPassword}
-          isOpen={isModalOpen}
-        />
-      )}
-
-      <div className="flex justify-center items-center gap-10">
-        <img src={download} alt="Download" />
-        <img src={compress} alt="Compress" />
-        <img src={share} alt="Share" />
-      </div>
-
       <div className="flex flex-col gap-10 items-start gradient-service px-24 py-10">
         <h2 className="text-[32px] font-medium">How to use the service?</h2>
         <div className="flex gap-10">
