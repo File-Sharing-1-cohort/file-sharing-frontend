@@ -418,10 +418,10 @@ const SenderPage: React.FC = () => {
           <img src={share} alt="Share" />
         </div>
       </div>
-      <div className="flex flex-col gap-10 items-start gradient-service px-24 py-10">
+      <div className="flex flex-col gap-10 items-start gradient-service px-44 py-20">
         <h2 className="text-[32px] font-medium">How to use the service?</h2>
         <div className="flex gap-10">
-          <div>
+          <div className="flex-1">
             <p className="mb-4 text-[20px] font-medium">To send files:</p>
             <ol className="list-decimal pl-5">
               <li className="leading-normal text-[20px]">
@@ -439,7 +439,7 @@ const SenderPage: React.FC = () => {
               </li>
             </ol>
           </div>
-          <div>
+          <div className="flex-1">
             <p className="mb-4 text-[20px] font-medium">To receive files:</p>
             <ol className="list-decimal pl-5">
               <li className="leading-normal text-[20px]">
