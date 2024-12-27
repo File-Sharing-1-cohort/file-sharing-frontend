@@ -23,7 +23,9 @@ const SenderPage: React.FC = () => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState<string | null>(null);
+  // const [isLoading, setIsLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
   const { setFileId } = useFileContext();
   const navigate = useNavigate();
 
@@ -346,6 +348,7 @@ const SenderPage: React.FC = () => {
     <section className="flex flex-col">
       <div className="flex flex-col min-h-[calc(100vh-6.25rem)] justify-between">
         <div className="flex flex-col items-center px-40">
+          {/* {uploadProgress !== null && <Progress value={uploadProgress} />} */}
           {<Progress value={uploadProgress} />}
           {selectedFiles.length > 0 && (
             <div className="flex flex-col items-start w-full px-10">
@@ -388,19 +391,21 @@ const SenderPage: React.FC = () => {
             </div>
           )}
 
-          <h1 className="text-[48px] text-center p-[46px]">
-            Fast file sharing without registration
-          </h1>
           {isLoading ? (
             <FolderDownload
               title={'Uploading'}
               description={'This may take a few seconds'}
             />
           ) : (
-            <UploadFile
-              onUploadProgress={handleUploadProgress}
-              onFileChange={handleFileChange}
-            />
+            <div>
+              <h1 className="text-[48px] text-center p-[46px]">
+                Fast file sharing without registration
+              </h1>
+              <UploadFile
+                onUploadProgress={handleUploadProgress}
+                onFileChange={handleFileChange}
+              />
+            </div>
           )}
         </div>
 
