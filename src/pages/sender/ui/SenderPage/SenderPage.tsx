@@ -23,8 +23,7 @@ const SenderPage: React.FC = () => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState<string | null>(null);
-  // const [isLoading, setIsLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { setFileId } = useFileContext();
   const navigate = useNavigate();
@@ -348,8 +347,8 @@ const SenderPage: React.FC = () => {
     <section className="flex flex-col">
       <div className="flex flex-col min-h-[calc(100vh-6.25rem)] justify-between">
         <div className="flex flex-col items-center px-40">
-          {/* {uploadProgress !== null && <Progress value={uploadProgress} />} */}
-          {<Progress value={uploadProgress} />}
+          {uploadProgress !== null && <Progress value={uploadProgress} />}
+
           {selectedFiles.length > 0 && (
             <div className="flex flex-col items-start w-full px-10">
               <div className="w-full">
