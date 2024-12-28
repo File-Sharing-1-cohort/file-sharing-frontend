@@ -24,7 +24,7 @@ const SenderPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { setFileId } = useFileContext();
+  const { setFileId, setFileExpirationDate } = useFileContext();
   const navigate = useNavigate();
 
   const handleUploadProgress = (progress: number) => {
@@ -93,7 +93,11 @@ const SenderPage: React.FC = () => {
           response.forEach(item => {
             if (item.id) {
               setFileId(item.id);
+              const loadedDate = new Date(item.loadedAt);
+              loadedDate.setHours(loadedDate.getHours() + item.expirationHours);
+              const expirationDateString = loadedDate.toLocaleString();
               console.log('File ID:', item.id);
+              setFileExpirationDate(expirationDateString);
             }
           });
         }
