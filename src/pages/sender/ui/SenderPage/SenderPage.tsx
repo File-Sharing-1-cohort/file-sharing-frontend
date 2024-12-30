@@ -314,7 +314,10 @@ const SenderPage: React.FC = () => {
                 <ul>
                   {selectedFiles.map(file => (
                     <li key={file.name}>
-                      <div className="flex justify-between py-20">
+                      <div
+                        data-testid="selected-file-name"
+                        className="flex justify-between py-20"
+                      >
                         <p className="text-[20px] ">{file.name}</p>
                         <p className="text-[20px]">
                           {formatFileSize(file.size)}
