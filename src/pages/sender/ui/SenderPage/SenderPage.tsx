@@ -312,13 +312,15 @@ const SenderPage: React.FC = () => {
             <div className="flex flex-col items-start w-full px-10">
               <div className="w-full">
                 <ul>
-                  {selectedFiles.map(file => (
+                  {selectedFiles.map((file, index) => (
                     <li key={file.name}>
-                      <div
-                        data-testid="selected-file-name"
-                        className="flex justify-between py-20"
-                      >
-                        <p className="text-[20px] ">{file.name}</p>
+                      <div className="flex justify-between py-20">
+                        <p
+                          data-testid={`selected-file-name${index == 0 ? '' : '-' + { index }}`}
+                          className="text-[20px]"
+                        >
+                          {file.name}
+                        </p>
                         <p className="text-[20px]">
                           {formatFileSize(file.size)}
                         </p>
