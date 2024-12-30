@@ -133,13 +133,11 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
     >
-      <label
-        data-testid="select-files-button"
-        className="btn-primary hover:opacity-70 gap-4"
-      >
+      <label className="btn-primary hover:opacity-70 gap-4">
         <span className="text-[20px] min-w-fit">Select files</span>
         <img src={uploadFileIcon} alt="uploadFile" />
         <Input
+          data-testid="select-files-input"
           type="file"
           className="hidden pointer-events-none"
           accept=".jpg,.jpeg,.png,.gif,.doc,.docx,.xls,.xlsx,.pdf,.zip,.rar"
