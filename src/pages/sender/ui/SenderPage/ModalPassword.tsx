@@ -51,7 +51,7 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
     onSave(password);
     setErrorMessage('');
     setPassword('');
-    onClose();
+    // onClose();
   };
 
   if (!isOpen) return null;

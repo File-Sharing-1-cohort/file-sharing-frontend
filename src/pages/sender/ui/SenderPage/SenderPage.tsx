@@ -47,6 +47,7 @@ const SenderPage: React.FC = () => {
 
   const handleToggleSwitch = () => {
     setIsSwitchOn(prevState => {
+      if (prevState) setPassword(null);
       const newState = !prevState;
       setIsModalOpen(newState);
       return newState;
