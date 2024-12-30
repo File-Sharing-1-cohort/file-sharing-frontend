@@ -356,7 +356,10 @@ const SenderPage: React.FC = () => {
             />
           ) : (
             <div>
-              <h1 className="text-[48px] text-center p-[46px]">
+              <h1
+                data-testid="home-page-title"
+                className="text-[48px] text-center p-[46px]"
+              >
                 Fast file sharing without registration
               </h1>
               <UploadFile
