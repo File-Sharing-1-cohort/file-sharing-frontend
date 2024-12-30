@@ -333,10 +333,10 @@ const SenderPage: React.FC = () => {
               <div className="mt-4 pb-20 flex justify-center gap-2">
                 <div
                   onClick={handleToggleSwitch}
-                  className={`w-16 h-8 rounded-full cursor-pointer bg-red-200 transition-colors`}
+                  className={`w-16 h-8 rounded-full cursor-pointer ${isSwitchOn ? 'bg-red-300' : 'bg-red-100'} transition-colors`}
                 >
                   <div
-                    className={`w-8 h-8 bg-red-400 rounded-full transition-transform transform ${isSwitchOn ? 'translate-x-8' : 'translate-x-0'}`}
+                    className={`w-7 h-7 m-[2px] ${isSwitchOn ? 'bg-gray-200' : 'bg-red-400'} rounded-full transition-transform transform ${isSwitchOn ? 'translate-x-8' : 'translate-x-0'}`}
                   />
                 </div>
                 <span className="text-[20px]">Set password</span>
