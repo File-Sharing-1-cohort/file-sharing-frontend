@@ -315,21 +315,28 @@ const SenderPage: React.FC = () => {
                   {selectedFiles.map((file, index) => (
                     <li key={file.name}>
                       <div className="flex justify-between py-20">
-                        <p
-                          data-testid={`selected-file-name${index == 0 ? '' : '-' + { index }}`}
-                          className="text-[20px]"
-                        >
-                          {file.name}
-                        </p>
+                        <div className="flex w-80">
+                          <p
+                            data-testid={`selected-file-name${index == 0 ? '' : '-' + { index }}`}
+                            className="text-[20px]  max-w-76 overflow-hidden text-ellipsis whitespace-nowrap"
+                          >
+                            {file.name.split('.').slice(0, -1).join('.')}
+                          </p>{' '}
+                          <p className="text-[20px]">
+                            .{file.name.split('.').pop()}
+                          </p>
+                        </div>
                         <p className="text-[20px]">
                           {formatFileSize(file.size)}
                         </p>
-                        <img
-                          className="cursor-pointer"
-                          onClick={() => handleCancelFile(file)}
-                          src={basket}
-                          alt="Remove file"
-                        />
+                        <div className="flex w-80 justify-end">
+                          <img
+                            className="cursor-pointer"
+                            onClick={() => handleCancelFile(file)}
+                            src={basket}
+                            alt="Remove file"
+                          />
+                        </div>
                       </div>
                     </li>
                   ))}
