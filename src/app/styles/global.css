@@ -155,6 +155,15 @@
     border-radius: 8px;
     cursor: pointer;
   }
+  .btn-disabled {
+    background: rgb(169, 169, 169);
+    color: rgba(255, 255, 255, 1);
+    padding: 10px 44px;
+    display: flex;
+    gap: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
 }
 
 @layer utilities {

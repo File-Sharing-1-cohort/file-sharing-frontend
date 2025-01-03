@@ -355,7 +355,10 @@ const SenderPage: React.FC = () => {
                 <span className="text-[20px]">Set password</span>
               </div>
 
-              <div onClick={handleUploadFile} className="btn-primary end">
+              <div
+                onClick={handleUploadFile}
+                className={` end ${isLoading ? 'btn-disabled' : 'btn-primary'}`}
+              >
                 Save
               </div>
             </div>
