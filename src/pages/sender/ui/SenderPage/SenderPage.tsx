@@ -25,7 +25,6 @@ const SenderPage: React.FC = () => {
   const [password, setPassword] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadController, setUploadController] = useState<AbortController | null>(null);
-  const { setFileId } = useFileContext();
   const { setFileId, setFileExpirationDate } = useFileContext();
   const navigate = useNavigate();
 
@@ -329,154 +328,139 @@ const SenderPage: React.FC = () => {
   return (
     <section className="flex flex-col">
       <div className="flex flex-col min-h-[calc(100vh-6.25rem)] justify-between">
-        <div className="flex flex-col items-center px-40">
+        <div className="flex flex-col items-center px-40 gap-20">
           {uploadProgress !== null && <Progress value={uploadProgress} />}
 
           {selectedFiles.length > 0 && (
-            <div className="flex flex-col items-start w-full px-10">
+            <div className="flex flex-col items-start w-full px-10 gap-10">
               <div className="w-full">
                 <ul>
                   {selectedFiles.map((file, index) => (
-                    <li key={file.name}>
-                      <div className="flex justify-between py-20">
-                        <div className="flex w-80">
+                    <li key={file.name} className="py-4">
+                      <div className="flex justify-between items-center">
+                        <div className="flex w-4/5">
                           <p
-                            data-testid={`selected-file-name${index == 0 ? '' : '-' + { index }}`}
-                            className="text-[20px]  max-w-76 overflow-hidden text-ellipsis whitespace-nowrap"
+                            data-testid={`selected-file-name${index === 0 ? '' : '-' + index}`}
+                            className="text-[20px] max-w-[300px] overflow-hidden text-ellipsis whitespace-nowrap"
                           >
                             {file.name.split('.').slice(0, -1).join('.')}
-                          </p>{' '}
-                          <p className="text-[20px]">
-                            .{file.name.split('.').pop()}
                           </p>
+                          <p className="text-[20px]">.{file.name.split('.').pop()}</p>
                         </div>
-                        <p className="text-[20px]">
-                          {formatFileSize(file.size)}
-                        </p>
-                        <div className="flex w-80 justify-end">
-                          <img
-                            className="cursor-pointer"
-                            onClick={() => handleCancelFile(file)}
-                            src={basket}
-                            alt="Remove file"
-                          />
-                        </div>
+                        <p className="text-[20px]">{formatFileSize(file.size)}</p>
+                        <img
+                          className="cursor-pointer ml-4"
+                          onClick={() => handleCancelFile(file)}
+                          src={basket}
+                          alt="Remove file"
+                        />
                       </div>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="mt-4 pb-20 flex justify-center gap-2">
+              <div className="mt-4 flex items-center gap-2">
                 <div
                   onClick={handleToggleSwitch}
-                  className={`w-16 h-8 rounded-full cursor-pointer ${isSwitchOn ? 'bg-red-300' : 'bg-red-100'} transition-colors`}
+                  className={`w-16 h-8 rounded-full cursor-pointer ${
+                    isSwitchOn ? 'bg-red-300' : 'bg-red-100'
+                  } transition-colors`}
                 >
                   <div
-                    className={`w-7 h-7 m-[2px] ${isSwitchOn ? 'bg-gray-200' : 'bg-red-400'} rounded-full transition-transform transform ${isSwitchOn ? 'translate-x-8' : 'translate-x-0'}`}
+                    className={`w-7 h-7 m-[2px] ${
+                      isSwitchOn ? 'bg-gray-200 translate-x-8' : 'bg-red-400 translate-x-0'
+                    } rounded-full transition-transform`}
                   />
                 </div>
                 <span className="text-[20px]">Set password</span>
               </div>
 
               <div
-                onClick={!isLoading ? handleUploadFile : undefined}
-                className={` end ${isLoading ? 'btn-disabled' : 'btn-primary'}`}
+                onClick={!isLoading ? startUpload : undefined}
+                className={`mt-4 end btn ${isLoading ? 'btn-disabled' : 'btn-primary'}`}
               >
                 Save
               </div>
             </div>
           )}
-          
-            <div onClick={startUpload} className="btn-primary end">
-              Save
+
+          <h1 className="font-libre text-[48px] text-center mt-10">
+            Fast file sharing without registration
+          </h1>
+
           {isLoading ? (
-            <FolderDownload
-              title={'Uploading'}
-              description={'This may take a few seconds'}
-            />
-          ) : (
-            <div>
-              <h1
-                data-testid="home-page-title"
-                className="text-[48px] text-center p-[46px]"
-              >
-                Fast file sharing without registration
-              </h1>
-              <UploadFile
-                onUploadProgress={handleUploadProgress}
-                onFileChange={handleFileChange}
+            <div className="flex flex-col items-center gap-6 mt-6">
+              <FolderDownload
+                title="Uploading"
+                description="This may take a few seconds"
               />
+              <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
+                <button
+                  className="btn_cancel text-[24px] font-[300] font-mallana"
+                  onClick={cancelUpload}
+                >
+                  Cancel
+                </button>
+                <img src={basket} alt="Cancel upload" />
+              </div>
             </div>
+          ) : (
+            <UploadFile
+              onUploadProgress={handleUploadProgress}
+              onFileChange={handleFileChange}
+            />
           )}
+
+          {isModalOpen && (
+            <ModalPassword
+              onClose={handleCloseModal}
+              onSave={handleSetPassword}
+              isOpen={isModalOpen}
+            />
+          )}
+
+          <div className="flex justify-center items-center gap-10 py-6">
+            <img src={download} alt="Download" />
+            <img src={compress} alt="Compress" />
+            <img src={share} alt="Share" />
+          </div>
         </div>
 
-        <h1 className="text-[48px] text-center">
-          Fast file sharing without registration
-        </h1>
-        {isLoading ? (
-          <div className='flex flex-col items-center gap-20'>
-          <FolderDownload
-            title={'Uploading'}
-            description={'This may take a few seconds'}
-          >
-            </FolderDownload>
-            <div className='flex justify-center gap-4 py-2 border-b border-customRedBorder'>
-              <button className="btn_cancel text-center text-[24px] font-[300] font-mallana" onClick={cancelUpload}>Cancel</button>
-              <img src={basket} alt="basket" />
+        <div className="flex flex-col gap-6 items-start gradient-service px-44 py-10">
+          <h2 className="text-[32px] font-medium">How to use the service?</h2>
+          <div className="flex gap-6">
+            <div className="flex-1">
+              <p className="mb-4 text-[20px] font-medium">To send files:</p>
+              <ol className="list-decimal pl-5">
+                <li className="leading-normal text-[20px]">
+                  Press the “Upload” button, or drag and drop files into the blue window.
+                </li>
+                <li className="leading-normal text-[20px]">
+                  After a successful upload, add more files if needed.
+                </li>
+                <li className="leading-normal text-[20px]">
+                  Set a password, if required.
+                </li>
+                <li className="leading-normal text-[20px]">
+                  Copy the link and send it to the recipient.
+                </li>
+              </ol>
             </div>
-          </div>
-        ) : (
-          <UploadFile
-            onUploadProgress={handleUploadProgress}
-            onFileChange={handleFileChange}
-        {isModalOpen && (
-          <ModalPassword
-            onClose={handleCloseModal}
-            onSave={handleSetPassword}
-            isOpen={isModalOpen}
-          />
-        )}
-
-        <div className="flex justify-center items-center gap-10 p-10">
-          <img src={download} alt="Download" />
-          <img src={compress} alt="Compress" />
-          <img src={share} alt="Share" />
-        </div>
-      </div>
-      <div className="flex flex-col gap-10 items-start gradient-service px-44 py-20">
-        <h2 className="text-[32px] font-medium">How to use the service?</h2>
-        <div className="flex gap-10">
-          <div className="flex-1">
-            <p className="mb-4 text-[20px] font-medium">To send files:</p>
-            <ol className="list-decimal pl-5">
-              <li className="leading-normal text-[20px]">
-                Press the “Upload” button, or drag and drop files into the blue window.
-              </li>
-              <li className="leading-normal text-[20px]">
-                After a successful upload, add more files if needed.
-              </li>
-              <li className="leading-normal text-[20px]">
-                Set a password, if required.
-              </li>
-              <li className="leading-normal text-[20px]">
-                Copy the link and send it to the recipient.
-              </li>
-            </ol>
-          </div>
-          <div className="flex-1">
-            <p className="mb-4 text-[20px] font-medium">To receive files:</p>
-            <ol className="list-decimal pl-5">
-              <li className="leading-normal text-[20px]">
-                Insert the link in the browser’s address bar.
-              </li>
-              <li className="leading-normal text-[20px]">
-                Insert the password, if required.
-              </li>
-              <li className="leading-normal text-[20px]">
-                Download the whole package by clicking the “Download” button in the upper-right corner, or download separate files by selecting them with the checkbox.
-              </li>
-            </ol>
+            <div className="flex-1">
+              <p className="mb-4 text-[20px] font-medium">To receive files:</p>
+              <ol className="list-decimal pl-5">
+                <li className="leading-normal text-[20px]">
+                  Insert the link in the browser’s address bar.
+                </li>
+                <li className="leading-normal text-[20px]">
+                  Insert the password, if required.
+                </li>
+                <li className="leading-normal text-[20px]">
+                  Download the whole package by clicking the “Download” button in the upper-right corner, or download separate files by selecting them with the checkbox.
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
       </div>
