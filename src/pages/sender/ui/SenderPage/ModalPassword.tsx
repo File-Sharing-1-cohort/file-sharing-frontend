@@ -51,7 +51,7 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
     onSave(password);
     setErrorMessage('');
     setPassword('');
-    onClose();
+    // onClose();
   };
 
   if (!isOpen) return null;
@@ -96,7 +96,7 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
           <button
             type="button"
             onClick={handleSave}
-            className={`btn-primary ${!password ? 'bg-gray-500 cursor-not-allowed' : 'btn-primary'}`}
+            className={`btn-primary ${!password || errorMessage ? 'bg-gray-500 cursor-not-allowed' : 'btn-primary'}`}
             disabled={!password}
           >
             Save

@@ -8,7 +8,7 @@ import folder from '@/shared/ui/icons/folder.svg';
 import success from '@/shared/ui/icons/alert-success.svg';
 
 const DownloadLink = () => {
-  const { fileId } = useFileContext();
+  const { fileId, fileExpirationDate } = useFileContext();
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -71,19 +71,25 @@ const DownloadLink = () => {
   return (
     <section className="flex flex-col gap-4 items-center w-screen p-10">
       <div>
-        <span className="px-72">Link</span>
-        <div className="flex gap-4 items-center w-screen px-72">
-          <Input
-            value={fileUrl || ''}
-            className="w-full border-[#116ACC]"
-            readOnly
-          />
-          <img
-            className="cursor-pointer"
-            src={copy}
-            alt="Copy"
-            onClick={handleCopyClick}
-          />
+        <div>
+          <span className="px-72">Your link</span>
+          <div className="flex gap-4 items-center w-screen px-72">
+            <Input
+              value={fileUrl || ''}
+              className="w-full border-[#116ACC]"
+              readOnly
+            />
+            <img
+              className="cursor-pointer"
+              src={copy}
+              alt="Copy"
+              onClick={handleCopyClick}
+            />
+          </div>
+        </div>
+        <div className="px-72 text-red-400">
+          The file is available till{' '}
+          {fileExpirationDate ? fileExpirationDate : 'N/A'}
         </div>
       </div>
 

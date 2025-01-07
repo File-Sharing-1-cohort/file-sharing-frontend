@@ -26,6 +26,7 @@ const SenderPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [uploadController, setUploadController] = useState<AbortController | null>(null);
   const { setFileId } = useFileContext();
+  const { setFileId, setFileExpirationDate } = useFileContext();
   const navigate = useNavigate();
 
   const handleUploadProgress = (progress: number) => {
@@ -60,6 +61,7 @@ const SenderPage: React.FC = () => {
 
   const handleToggleSwitch = () => {
     setIsSwitchOn(prevState => {
+      if (prevState) setPassword(null);
       const newState = !prevState;
       setIsModalOpen(newState);
       return newState;
@@ -73,9 +75,6 @@ const SenderPage: React.FC = () => {
 
   const handleUploadFile = async (controller: AbortController) => {
     if (selectedFiles.length > 0) {
-      const toastId = 'upload-toast';
-      toast.loading('Uploading files...', { id: toastId });
-
       try {
         const formData = new FormData();
         selectedFiles.forEach(file => {
@@ -110,59 +109,20 @@ const SenderPage: React.FC = () => {
           response.forEach(item => {
             if (item.id) {
               setFileId(item.id);
+              const loadedDate = new Date(item.loadedAt);
+              loadedDate.setHours(loadedDate.getHours() + item.expirationHours);
+              const expirationDateString = loadedDate.toLocaleString();
               console.log('File ID:', item.id);
+              setFileExpirationDate(expirationDateString);
             }
           });
         }
-        toast.success('Files uploaded successfully!', {
-          id: toastId,
-          duration: 1000,
-        });
+
         handleUploadComplete();
         setIsLoading(false);
         navigate('/download-link');
       } catch (error) {
         console.error('Upload error:', error);
-        toast.custom(
-          () => (
-            <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
-              <div className="flex start gap-2">
-                <img src={errorIcon} alt="error" />
-                <h4 className="font-semibold text-customGray text-[24px] font-[600]">
-                  Something went wrong
-                </h4>
-              </div>
-              <div className="px-3 mt-2 text-customBlack">
-                An unknown error occurred while downloading the file
-              </div>
-              <div className="flex end gap-6  mt-4 space-x-2">
-                <button
-                  onClick={() => {
-                    toast.dismiss();
-                  }}
-                  className="px-4 py-2 text-[20px] border border-customRed text-customGray font-[400] bg-transparent rounded"
-                >
-                  Exit
-                </button>
-                <button
-                  onClick={() => {
-                    toast.dismiss();
-                  }}
-                  className="px-4 py-2 text-[20px] font-[400] text-white bg-customRed rounded"
-                >
-                  Try again
-                </button>
-              </div>
-            </div>
-          ),
-          {
-            duration: Infinity,
-            position: 'top-center',
-            className: `
-                fixed left-1/2 transform -translate-x-1/2
-              `,
-          },
-        );
       }
     } else {
       toast.custom(
@@ -367,47 +327,89 @@ const SenderPage: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col gap-20">
-      <div className="flex flex-col gap-4 items-center px-24 py-10">
-        {uploadProgress !== null && <Progress value={uploadProgress} />}
-        {selectedFiles.length > 0 && (
-          <div className="flex flex-col items-start w-full px-10">
-            <div className="w-full">
-              <ul>
-                {selectedFiles.map(file => (
-                  <li key={file.name}>
-                    <div className="flex justify-between">
-                      <p className="text-[20px]">{file.name}</p>
-                      <p className="text-[20px]">{formatFileSize(file.size)}</p>
-                      <img
-                        className="cursor-pointer"
-                        onClick={() => handleCancelFile(file)}
-                        src={basket}
-                        alt="Remove file"
-                      />
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
+    <section className="flex flex-col">
+      <div className="flex flex-col min-h-[calc(100vh-6.25rem)] justify-between">
+        <div className="flex flex-col items-center px-40">
+          {uploadProgress !== null && <Progress value={uploadProgress} />}
 
-            <div className="mt-4 flex justify-center gap-2">
-              <div
-                onClick={handleToggleSwitch}
-                className={`w-16 h-8 rounded-full cursor-pointer ${isSwitchOn ? 'bg-blue-500' : 'bg-gray-300'} transition-colors`}
-              >
-                <div
-                  className={`w-8 h-8 bg-white rounded-full transition-transform transform ${isSwitchOn ? 'translate-x-8' : 'translate-x-0'}`}
-                />
+          {selectedFiles.length > 0 && (
+            <div className="flex flex-col items-start w-full px-10">
+              <div className="w-full">
+                <ul>
+                  {selectedFiles.map((file, index) => (
+                    <li key={file.name}>
+                      <div className="flex justify-between py-20">
+                        <div className="flex w-80">
+                          <p
+                            data-testid={`selected-file-name${index == 0 ? '' : '-' + { index }}`}
+                            className="text-[20px]  max-w-76 overflow-hidden text-ellipsis whitespace-nowrap"
+                          >
+                            {file.name.split('.').slice(0, -1).join('.')}
+                          </p>{' '}
+                          <p className="text-[20px]">
+                            .{file.name.split('.').pop()}
+                          </p>
+                        </div>
+                        <p className="text-[20px]">
+                          {formatFileSize(file.size)}
+                        </p>
+                        <div className="flex w-80 justify-end">
+                          <img
+                            className="cursor-pointer"
+                            onClick={() => handleCancelFile(file)}
+                            src={basket}
+                            alt="Remove file"
+                          />
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <span className="text-[20px]">Set password</span>
-            </div>
 
+              <div className="mt-4 pb-20 flex justify-center gap-2">
+                <div
+                  onClick={handleToggleSwitch}
+                  className={`w-16 h-8 rounded-full cursor-pointer ${isSwitchOn ? 'bg-red-300' : 'bg-red-100'} transition-colors`}
+                >
+                  <div
+                    className={`w-7 h-7 m-[2px] ${isSwitchOn ? 'bg-gray-200' : 'bg-red-400'} rounded-full transition-transform transform ${isSwitchOn ? 'translate-x-8' : 'translate-x-0'}`}
+                  />
+                </div>
+                <span className="text-[20px]">Set password</span>
+              </div>
+
+              <div
+                onClick={!isLoading ? handleUploadFile : undefined}
+                className={` end ${isLoading ? 'btn-disabled' : 'btn-primary'}`}
+              >
+                Save
+              </div>
+            </div>
+          )}
+          
             <div onClick={startUpload} className="btn-primary end">
               Save
+          {isLoading ? (
+            <FolderDownload
+              title={'Uploading'}
+              description={'This may take a few seconds'}
+            />
+          ) : (
+            <div>
+              <h1
+                data-testid="home-page-title"
+                className="text-[48px] text-center p-[46px]"
+              >
+                Fast file sharing without registration
+              </h1>
+              <UploadFile
+                onUploadProgress={handleUploadProgress}
+                onFileChange={handleFileChange}
+              />
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         <h1 className="text-[48px] text-center">
           Fast file sharing without registration
@@ -428,28 +430,24 @@ const SenderPage: React.FC = () => {
           <UploadFile
             onUploadProgress={handleUploadProgress}
             onFileChange={handleFileChange}
+        {isModalOpen && (
+          <ModalPassword
+            onClose={handleCloseModal}
+            onSave={handleSetPassword}
+            isOpen={isModalOpen}
           />
         )}
+
+        <div className="flex justify-center items-center gap-10 p-10">
+          <img src={download} alt="Download" />
+          <img src={compress} alt="Compress" />
+          <img src={share} alt="Share" />
+        </div>
       </div>
-
-      {isModalOpen && (
-        <ModalPassword
-          onClose={handleCloseModal}
-          onSave={handleSetPassword}
-          isOpen={isModalOpen}
-        />
-      )}
-
-      <div className="flex justify-center items-center gap-10">
-        <img src={download} alt="Download" />
-        <img src={compress} alt="Compress" />
-        <img src={share} alt="Share" />
-      </div>
-
-      <div className="flex flex-col gap-10 items-start gradient-service px-24 py-10">
+      <div className="flex flex-col gap-10 items-start gradient-service px-44 py-20">
         <h2 className="text-[32px] font-medium">How to use the service?</h2>
         <div className="flex gap-10">
-          <div>
+          <div className="flex-1">
             <p className="mb-4 text-[20px] font-medium">To send files:</p>
             <ol className="list-decimal pl-5">
               <li className="leading-normal text-[20px]">
@@ -466,7 +464,7 @@ const SenderPage: React.FC = () => {
               </li>
             </ol>
           </div>
-          <div>
+          <div className="flex-1">
             <p className="mb-4 text-[20px] font-medium">To receive files:</p>
             <ol className="list-decimal pl-5">
               <li className="leading-normal text-[20px]">
