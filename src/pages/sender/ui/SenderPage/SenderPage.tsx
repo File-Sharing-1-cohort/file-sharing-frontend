@@ -356,7 +356,7 @@ const SenderPage: React.FC = () => {
               </div>
 
               <div
-                onClick={handleUploadFile}
+                onClick={!isLoading ? handleUploadFile : undefined}
                 className={` end ${isLoading ? 'btn-disabled' : 'btn-primary'}`}
               >
                 Save
