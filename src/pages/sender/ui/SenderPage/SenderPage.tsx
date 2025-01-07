@@ -24,7 +24,8 @@ const SenderPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [uploadController, setUploadController] = useState<AbortController | null>(null);
+  const { setFileId } = useFileContext();
   const { setFileId, setFileExpirationDate } = useFileContext();
   const navigate = useNavigate();
 
@@ -36,6 +37,19 @@ const SenderPage: React.FC = () => {
     setSelectedFiles([]);
     setUploadProgress(null);
   };
+
+  const startUpload = () => {
+    const controller = new AbortController();
+    setUploadController(controller);
+    handleUploadFile(controller);
+  }
+
+  const cancelUpload = () => {
+    if (uploadController) {
+      uploadController.abort();
+      setUploadController(null);
+    }
+  }
 
   const formatFileSize = (size: number) => {
     if (size < 1024) return `${size} B`;
@@ -59,7 +73,7 @@ const SenderPage: React.FC = () => {
     setIsSwitchOn(false);
   };
 
-  const handleUploadFile = async () => {
+  const handleUploadFile = async (controller: AbortController) => {
     if (selectedFiles.length > 0) {
       try {
         const formData = new FormData();
@@ -85,8 +99,11 @@ const SenderPage: React.FC = () => {
 
         console.log('FormData:', [...formData.entries()]);
         setIsLoading(true);
-        uploadFileWithProgress(formData);
-        const response = await uploadFile(formData).unwrap();
+        uploadFileWithProgress(formData, controller);
+        const response = await uploadFile({
+          formData,
+          signal: controller.signal,
+        }).unwrap();
         console.log('ServerResponse:', response);
         if (Array.isArray(response) && response.length > 0) {
           response.forEach(item => {
@@ -149,9 +166,16 @@ const SenderPage: React.FC = () => {
     }
   };
 
-  const uploadFileWithProgress = (formData: FormData) => {
+  const uploadFileWithProgress = (formData: FormData, controller: AbortController) => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `${import.meta.env.VITE_BASE_API_URL}/files`, true);
+
+    controller.signal.addEventListener('abort', () => {
+      xhr.abort();
+      setUploadProgress(null);
+      setIsLoading(false);
+      console.log('Upload abortet')
+    });
 
     xhr.upload.onprogress = event => {
       if (event.lengthComputable) {
@@ -212,8 +236,8 @@ const SenderPage: React.FC = () => {
               Deleting file
             </h4>
           </div>
-          <div className="px-3 start mt-2 text-customBlack">
-            Are you sure that you want to delete file?
+          <div className="start mt-2 text-customBlack">
+          Are you sure that you want to delete file?
           </div>
           <div className="flex end gap-6  mt-4 space-x-2">
             <button
@@ -363,7 +387,9 @@ const SenderPage: React.FC = () => {
               </div>
             </div>
           )}
-
+          
+            <div onClick={startUpload} className="btn-primary end">
+              Save
           {isLoading ? (
             <FolderDownload
               title={'Uploading'}
@@ -385,6 +411,25 @@ const SenderPage: React.FC = () => {
           )}
         </div>
 
+        <h1 className="text-[48px] text-center">
+          Fast file sharing without registration
+        </h1>
+        {isLoading ? (
+          <div className='flex flex-col items-center gap-20'>
+          <FolderDownload
+            title={'Uploading'}
+            description={'This may take a few seconds'}
+          >
+            </FolderDownload>
+            <div className='flex justify-center gap-4 py-2 border-b border-customRedBorder'>
+              <button className="btn_cancel text-center text-[24px] font-[300] font-mallana" onClick={cancelUpload}>Cancel</button>
+              <img src={basket} alt="basket" />
+            </div>
+          </div>
+        ) : (
+          <UploadFile
+            onUploadProgress={handleUploadProgress}
+            onFileChange={handleFileChange}
         {isModalOpen && (
           <ModalPassword
             onClose={handleCloseModal}
@@ -406,17 +451,16 @@ const SenderPage: React.FC = () => {
             <p className="mb-4 text-[20px] font-medium">To send files:</p>
             <ol className="list-decimal pl-5">
               <li className="leading-normal text-[20px]">
-                Press button “Upload”, or drag and drop files into the blue
-                window
+                Press the “Upload” button, or drag and drop files into the blue window.
               </li>
               <li className="leading-normal text-[20px]">
-                After successful upload, add more files if needed
+                After a successful upload, add more files if needed.
               </li>
               <li className="leading-normal text-[20px]">
-                Set password if needed
+                Set a password, if required.
               </li>
               <li className="leading-normal text-[20px]">
-                Copy link and send it to a recipient
+                Copy the link and send it to the recipient.
               </li>
             </ol>
           </div>
@@ -424,15 +468,13 @@ const SenderPage: React.FC = () => {
             <p className="mb-4 text-[20px] font-medium">To receive files:</p>
             <ol className="list-decimal pl-5">
               <li className="leading-normal text-[20px]">
-                Insert link in a browser’s address bar
+                Insert the link in the browser’s address bar.
               </li>
               <li className="leading-normal text-[20px]">
-                Insert password if needed
+                Insert the password, if required.
               </li>
               <li className="leading-normal text-[20px]">
-                Download whole package by clicking button “Download” in the
-                right upper corner, or download separate files by selecting them
-                with a checkbox
+                Download the whole package by clicking the “Download” button in the upper-right corner, or download separate files by selecting them with the checkbox.
               </li>
             </ol>
           </div>
