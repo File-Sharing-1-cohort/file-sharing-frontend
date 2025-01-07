@@ -5,6 +5,7 @@ import { Input } from '@/shared/ui';
 import { Progress } from '@/shared/ui';
 import { FolderDownload } from '@/shared/ui/LoadingComponent';
 import { LinkInc } from '@/shared/ui/LinkIncorrect';
+import basket from '@/shared/ui/icons/red-basket.svg';
 import download from '@/shared/ui/icons/download-img.svg';
 import compress from '@/shared/ui/icons/compress-img.svg';
 import share from '@/shared/ui/icons/share-img.svg';
@@ -34,6 +35,7 @@ const DownloadFile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const [abortController, setAbortController] = useState<AbortController | null>(null);
 
   const fetchFileMetadata = async (password?: string) => {
     try {
@@ -117,6 +119,11 @@ const DownloadFile = () => {
     const totalSize = parseInt(metadata.fileSize, 10);
     let loaded = 0;
 
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    setAbortController(controller);
+
     try {
       const url = `${import.meta.env.VITE_BASE_API_URL}/files/${fileId}?password=${encodeURIComponent(password)}`;
       const response = await fetch(url, {
@@ -124,6 +131,7 @@ const DownloadFile = () => {
         headers: {
           Accept: 'application/octet-stream',
         },
+        signal,
       });
 
       if (!response.body) {
@@ -241,6 +249,16 @@ const DownloadFile = () => {
     }
   };
 
+  const cancelDownload = () => {
+    if (abortController) {
+      abortController.abort();
+      setAbortController(null);
+      setIsLoading(false);
+      toast.info('Download canceled.');
+    }
+  };
+
+
   const handlePasswordSubmit = async () => {
     if (password) {
       if (!metadata) {
@@ -287,7 +305,18 @@ const DownloadFile = () => {
       ) : isLoading ? (
         <>
           {downloadProgress > 0 && <Progress value={downloadProgress} />}
-          <FolderDownload />
+          <div className="flex flex-col items-center gap-6 mt-6">
+              <FolderDownload />
+              <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
+                <button
+                  className="btn_cancel text-[24px] font-[300] font-mallana"
+                  onClick={cancelDownload}
+                >
+                  Cancel
+                </button>
+                <img src={basket} alt="Cancel upload" />
+              </div> 
+          </div>
         </>
       ) : metadata ? (
         <div className="flex flex-col items-center gap-5 w-full p-6">
@@ -302,8 +331,19 @@ const DownloadFile = () => {
               {expirationTime(metadata.loadedAt, metadata.expirationHours)}
             </p>
           )}
-
-          <FolderDownload />
+              
+          <div className="flex flex-col items-center gap-6 mt-6">
+              <FolderDownload />
+              <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
+                <button
+                  className="btn_cancel text-[24px] font-[300] font-mallana"
+                  onClick={cancelDownload}
+                >
+                  Cancel
+                </button>
+                <img src={basket} alt="Cancel upload" />
+              </div> 
+          </div>
 
           {/* Якщо потрібна таблиця з файлами */}
           {/* <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
@@ -363,7 +403,9 @@ const DownloadFile = () => {
                 />
               </div>
               {errorMessage ? (
-                <span className="text-[14px] text-customRed">{errorMessage}</span>
+                <span className="text-[14px] text-customRed">
+                  {errorMessage}
+                </span>
               ) : (
                 <span className="font-mallana text-customGrayLight text-[14px]">
                   Enter the password provided by the sender
