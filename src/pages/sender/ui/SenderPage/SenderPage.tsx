@@ -130,7 +130,7 @@ const SenderPage: React.FC = () => {
           <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={errorIcon} alt="error" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
                 An error occurred while uploading the file
               </h4>
             </div>
@@ -198,7 +198,7 @@ const SenderPage: React.FC = () => {
           <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-success border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={success} alt="success" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
                 Password set successfully
               </h4>
             </div>
@@ -235,7 +235,7 @@ const SenderPage: React.FC = () => {
         <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-alert border rounded-lg shadow-lg">
           <div className="flex start gap-2">
             <img src={alert} alt="alert" />
-            <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+            <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
               Deleting file
             </h4>
           </div>
@@ -290,7 +290,7 @@ const SenderPage: React.FC = () => {
           <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-yellow border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={alertYellow} alt="alertYellow" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
                 Too big size
               </h4>
             </div>

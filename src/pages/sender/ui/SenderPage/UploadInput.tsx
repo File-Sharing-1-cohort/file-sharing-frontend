@@ -61,7 +61,7 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
             <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
               <div className="flex start gap-2">
                 <img src={error} alt="error" />
-                <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+                <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
                   File upload error
                 </h4>
               </div>

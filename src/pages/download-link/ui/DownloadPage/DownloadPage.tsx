@@ -33,7 +33,7 @@ const DownloadLink = () => {
               <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-success border rounded-lg shadow-lg">
                 <div className="flex start gap-2">
                   <img src={success} alt="success" />
-                  <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+                  <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
                     Link copied
                   </h4>
                 </div>

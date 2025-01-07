@@ -82,7 +82,7 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
             />
           </div>
           {errorMessage ? (
-            <span className="text-[14px] text-red-500">{errorMessage}</span>
+            <span className="text-[14px] text-customRed">{errorMessage}</span>
           ) : (
             <span className="text-[14px] text-white">
               Password must contain between 1 and 30 characters

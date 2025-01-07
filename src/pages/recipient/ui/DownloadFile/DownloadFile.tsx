@@ -160,7 +160,7 @@ const DownloadFile = () => {
           <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-success border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={success} alt="success" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
                 File downloaded successfully
               </h4>
             </div>
@@ -188,7 +188,7 @@ const DownloadFile = () => {
           </div>
         ),
         {
-          duration: 3000,
+          duration: Infinity,
           position: 'top-center',
           className: `
                 fixed left-1/2 transform -translate-x-1/2
@@ -203,7 +203,7 @@ const DownloadFile = () => {
           <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={errorIcon} alt="error" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600]">
+              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
                 Something went wrong
               </h4>
             </div>
@@ -363,7 +363,7 @@ const DownloadFile = () => {
                 />
               </div>
               {errorMessage ? (
-                <span className="text-[14px] text-red-500">{errorMessage}</span>
+                <span className="text-[14px] text-customRed">{errorMessage}</span>
               ) : (
                 <span className="font-mallana text-customGrayLight text-[14px]">
                   Enter the password provided by the sender
