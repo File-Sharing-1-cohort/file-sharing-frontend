@@ -1,6 +1,12 @@
 import folderDownload from '@/shared/ui/icons/folder-download.svg';
 
-const FolderDownload = ({
+interface FolderDownloadProps {
+  title?: string;
+  description?: string;
+  children?: React.ReactNode;
+}
+
+const FolderDownload: React.FC<FolderDownloadProps> = ({
   title = 'Downloading',
   description = 'This may take a few seconds',
 }) => {

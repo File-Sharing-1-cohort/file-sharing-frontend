@@ -16,11 +16,12 @@ const baseApi = createApi({
   endpoints: build => ({
     checkApi: build.query<string, void>({ query: () => 'ping' }),
     getLogo: build.query<string, void>({ query: () => 'public/logo' }),
-    uploadFile: build.mutation<FileData, FormData>({
-      query: formData => ({
+    uploadFile: build.mutation<FileData, { formData: FormData; signal: AbortSignal }>({
+      query: ({ formData, signal }) => ({
         url: '/files',
         method: 'POST',
         body: formData,
+        signal,
       }),
       async onQueryStarted(queryFulfilled) {
         try {

@@ -155,6 +155,10 @@
     border-radius: 8px;
     cursor: pointer;
   }
+
+  .btn_cancel {
+    color: #FA8484;
+  }
 }
 
 @layer utilities {

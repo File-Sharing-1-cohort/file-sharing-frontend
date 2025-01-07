@@ -38,6 +38,7 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        customRedBorder: '#FA8484',
         customLightBlue: '#116ACC',
         customGreen: '#76CA66',
         customYellow: '#FBC756',
