@@ -80,21 +80,21 @@ const SenderPage: React.FC = () => {
         const formData = new FormData();
         let zipBlob: Blob | null = null;
 
-      if (selectedFiles.length > 1) {
-        const zip = new JSZip();
-        selectedFiles.forEach((file) => {
-          zip.file(file.name, file);
-          console.log('Appending file to zip:', file);
-        });
+        if (selectedFiles.length > 1) {
+          const zip = new JSZip();
+          selectedFiles.forEach(file => {
+            zip.file(file.name, file);
+            console.log('Appending file to zip:', file);
+          });
 
-        zipBlob = await zip.generateAsync({ type: 'blob' });
+          zipBlob = await zip.generateAsync({ type: 'blob' });
 
-        formData.append('files', zipBlob, 'archive.zip');
-      } else {
-        const file = selectedFiles[0];
-        formData.append('files', file);
-        console.log('Appending single file:', file);
-      }
+          formData.append('files', zipBlob, 'archive.zip');
+        } else {
+          const file = selectedFiles[0];
+          formData.append('files', file);
+          console.log('Appending single file:', file);
+        }
 
         const totalSize = selectedFiles.reduce(
           (sum, file) => sum + file.size,
@@ -366,74 +366,74 @@ const SenderPage: React.FC = () => {
               </div>
             </div>
           ) : (
-              <div>
-                {selectedFiles.length > 0 && (
-                  <div className="flex flex-col items-start w-full px-10">
-                    <div className="w-full">
-                      <ul>
-                        {selectedFiles.map((file, index) => (
-                          <li key={file.name} className="py-4">
-                            <div className="flex justify-between items-center">
-                              <div className="flex w-4/5">
-                                <p
-                                  data-testid={`selected-file-name${index === 0 ? '' : '-' + index}`}
-                                  className="text-[20px] max-w-[300px] overflow-hidden text-ellipsis whitespace-nowrap"
-                                >
-                                  {file.name.split('.').slice(0, -1).join('.')}
-                                </p>
-                                <p className="text-[20px]">
-                                  .{file.name.split('.').pop()}
-                                </p>
-                              </div>
-                              <p className="text-[20px]">
-                                {formatFileSize(file.size)}
+            <div>
+              {selectedFiles.length > 0 && (
+                <div className="flex flex-col items-start w-full px-10">
+                  <div className="w-full">
+                    <ul>
+                      {selectedFiles.map((file, index) => (
+                        <li key={file.name} className="py-4">
+                          <div className="flex justify-between items-center">
+                            <div className="flex w-4/5">
+                              <p
+                                data-testid={`selected-file-name${index === 0 ? '' : '-' + index}`}
+                                className="text-[20px] max-w-[300px] overflow-hidden text-ellipsis whitespace-nowrap"
+                              >
+                                {file.name.split('.').slice(0, -1).join('.')}
                               </p>
-                              <img
-                                className="cursor-pointer ml-4"
-                                onClick={() => handleCancelFile(file)}
-                                src={basket}
-                                alt="Remove file"
-                              />
+                              <p className="text-[20px]">
+                                .{file.name.split('.').pop()}
+                              </p>
                             </div>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="mt-4 flex items-center gap-2">
-                      <div
-                        onClick={handleToggleSwitch}
-                        className={`w-16 h-8 rounded-full cursor-pointer ${
-                          isSwitchOn ? 'bg-red-300' : 'bg-red-100'
-                        } transition-colors`}
-                      >
-                        <div
-                          className={`w-7 h-7 m-[2px] ${
-                            isSwitchOn
-                              ? 'bg-gray-200 translate-x-8'
-                              : 'bg-red-400 translate-x-0'
-                          } rounded-full transition-transform`}
-                        />
-                      </div>
-                      <span className="text-[20px]">Set password</span>
-                    </div>
-
-                    <div
-                      onClick={!isLoading ? startUpload : undefined}
-                      className={`mt-4 end btn ${isLoading ? 'btn-disabled' : 'btn-primary'}`}
-                    >
-                      Save
-                    </div>
+                            <p className="text-[20px]">
+                              {formatFileSize(file.size)}
+                            </p>
+                            <img
+                              className="cursor-pointer ml-4"
+                              onClick={() => handleCancelFile(file)}
+                              src={basket}
+                              alt="Remove file"
+                            />
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                )}
-                <h1 className="font-libre text-[48px] text-center mt-10 mb-20">
-                  Fast file sharing without registration
-                </h1>
-                <UploadFile
-                  onUploadProgress={handleUploadProgress}
-                  onFileChange={handleFileChange}
-                />
-              </div>
+
+                  <div className="mt-4 flex items-center gap-2">
+                    <div
+                      onClick={handleToggleSwitch}
+                      className={`w-16 h-8 rounded-full cursor-pointer ${
+                        isSwitchOn ? 'bg-red-300' : 'bg-red-100'
+                      } transition-colors`}
+                    >
+                      <div
+                        className={`w-7 h-7 m-[2px] ${
+                          isSwitchOn
+                            ? 'bg-gray-200 translate-x-8'
+                            : 'bg-red-400 translate-x-0'
+                        } rounded-full transition-transform`}
+                      />
+                    </div>
+                    <span className="text-[20px]">Set password</span>
+                  </div>
+
+                  <div
+                    onClick={!isLoading ? startUpload : undefined}
+                    className={`mt-4 end btn ${isLoading ? 'btn-disabled' : 'btn-primary'}`}
+                  >
+                    Save
+                  </div>
+                </div>
+              )}
+              <h1 className="font-libre text-[48px] text-center mt-10 mb-20">
+                Fast file sharing without registration
+              </h1>
+              <UploadFile
+                onUploadProgress={handleUploadProgress}
+                onFileChange={handleFileChange}
+              />
+            </div>
           )}
 
           {isModalOpen && (
