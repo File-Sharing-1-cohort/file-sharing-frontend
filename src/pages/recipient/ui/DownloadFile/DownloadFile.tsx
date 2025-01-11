@@ -35,7 +35,8 @@ const DownloadFile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(false);
-  const [abortController, setAbortController] = useState<AbortController | null>(null);
+  const [abortController, setAbortController] =
+    useState<AbortController | null>(null);
 
   const fetchFileMetadata = async (password?: string) => {
     try {
@@ -258,7 +259,6 @@ const DownloadFile = () => {
     }
   };
 
-
   const handlePasswordSubmit = async () => {
     if (password) {
       if (!metadata) {
@@ -306,16 +306,16 @@ const DownloadFile = () => {
         <>
           {downloadProgress > 0 && <Progress value={downloadProgress} />}
           <div className="flex flex-col items-center gap-6 mt-6">
-              <FolderDownload />
-              <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
-                <button
-                  className="btn_cancel text-[24px] font-[300] font-mallana"
-                  onClick={cancelDownload}
-                >
-                  Cancel
-                </button>
-                <img src={basket} alt="Cancel upload" />
-              </div> 
+            <FolderDownload />
+            <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
+              <button
+                className="btn_cancel text-[24px] font-[300] font-mallana"
+                onClick={cancelDownload}
+              >
+                Cancel
+              </button>
+              <img src={basket} alt="Cancel upload" />
+            </div>
           </div>
         </>
       ) : metadata ? (
@@ -331,18 +331,18 @@ const DownloadFile = () => {
               {expirationTime(metadata.loadedAt, metadata.expirationHours)}
             </p>
           )}
-              
+
           <div className="flex flex-col items-center gap-6 mt-6">
-              <FolderDownload />
-              <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
-                <button
-                  className="btn_cancel text-[24px] font-[300] font-mallana"
-                  onClick={cancelDownload}
-                >
-                  Cancel
-                </button>
-                <img src={basket} alt="Cancel upload" />
-              </div> 
+            <FolderDownload />
+            <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
+              <button
+                className="btn_cancel text-[24px] font-[300] font-mallana"
+                onClick={cancelDownload}
+              >
+                Cancel
+              </button>
+              <img src={basket} alt="Cancel upload" />
+            </div>
           </div>
 
           {/* Якщо потрібна таблиця з файлами */}
