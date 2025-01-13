@@ -1,5 +1,5 @@
 import { Button } from '@/shared/ui';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logo from './logo.svg';
 
@@ -10,10 +10,19 @@ const Footer: FC<TFooterProps> = () => {
   const location = useLocation();
 
   const handleClick = (e: React.MouseEvent) => {
-     if (location.pathname === '/faq') {
+    if (location.pathname === '/faq') {
       e.preventDefault();
       navigate('/');
     }
+  };
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/');
+    window.location.reload();
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
   }
 
   return (
@@ -26,7 +35,7 @@ const Footer: FC<TFooterProps> = () => {
         </Button>
 
         <Button asChild variant="link">
-          <Link to="/">
+          <Link to="/" onClick={handleLogoClick}>
             <img src={logo} alt="logo" />
           </Link>
         </Button>
