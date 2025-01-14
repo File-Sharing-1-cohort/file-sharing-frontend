@@ -6,9 +6,7 @@ import planet from './planet.svg';
 
 type THeaderProps = object;
 
-
 const Header: FC<THeaderProps> = () => {
-
   const navigate = useNavigate();
 
   const handleLogoClick = (e: React.MouseEvent) => {
@@ -18,7 +16,7 @@ const Header: FC<THeaderProps> = () => {
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 0);
-  }
+  };
 
   return (
     <header className="bg-header-footer-gradient shadow-header-custom px-11 py-7">

@@ -13,7 +13,7 @@ import compress from '@/shared/ui/icons/compress-img.svg';
 import share from '@/shared/ui/icons/share-img.svg';
 import basket from '@/shared/ui/icons/red-basket.svg';
 import alert from '@/shared/ui/icons/alert-delete.svg';
-import alertYellow from '@/shared/ui/icons/alert-yellow.svg';
+// import alertYellow from '@/shared/ui/icons/alert-yellow.svg';
 import errorIcon from '@/shared/ui/icons/error.svg';
 import success from '@/shared/ui/icons/alert-success.svg';
 
@@ -96,14 +96,12 @@ const SenderPage: React.FC = () => {
           console.log('Appending single file:', file);
         }
 
-        const totalSize = selectedFiles.reduce(
-          (sum, file) => sum + file.size,
-          0,
-        );
-        formData.append(
-          'toCompress',
-          totalSize > MAX_TOTAL_SIZE ? 'true' : 'false',
-        );
+        // const totalSize = selectedFiles.reduce(
+        //   (sum, file) => sum + file.size,
+        //   0,
+        // );
+
+        formData.append('toCompress', 'false');
 
         if (password) {
           formData.append('password', password);
@@ -148,7 +146,9 @@ const SenderPage: React.FC = () => {
                 An error occurred while uploading the file
               </h4>
             </div>
-            <div className="px-3 mt-2 text-customBlack">No files selected</div>
+            <p className="px-3 mt-2 text-customBlack start">
+              No files selected
+            </p>
             <div className="flex end gap-6  mt-4 space-x-2">
               <button
                 onClick={() => {
@@ -298,34 +298,33 @@ const SenderPage: React.FC = () => {
       selectedFiles.reduce((sum, file) => sum + file.size, 0);
 
     if (totalSize > MAX_TOTAL_SIZE) {
-      const message = `To download files larger than 50 MB, you need to compress them`;
+      const message = `Cannot upload files larger than 50MB. Please select another files.`;
       toast.custom(
         () => (
-          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-yellow border rounded-lg shadow-lg">
+          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
             <div className="flex start gap-2">
-              <img src={alertYellow} alt="alertYellow" />
+              <img src={errorIcon} alt="error" />
               <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
-                Too big size
+                An error occurred while uploading the file
               </h4>
             </div>
-            <div className="px-3 mt-2 text-customBlack">{message}</div>
-            <div className="flex end gap-6 mt-4 space-x-2">
+            <p className="px-3 mt-2 text-customBlack start">{message}</p>
+            <div className="flex end gap-6  mt-4 space-x-2">
               <button
                 onClick={() => {
                   toast.dismiss();
                 }}
-                className="px-4 py-2 border border-customYellow text-customGray bg-transparent rounded"
+                className="px-4 py-2 text-[20px] border border-customRed text-customGray font-[400] bg-transparent rounded"
               >
                 Exit
               </button>
               <button
                 onClick={() => {
-                  setSelectedFiles(prevFiles => [...prevFiles, ...files]);
                   toast.dismiss();
                 }}
-                className="px-4 py-2 text-customGray bg-customYellow rounded"
+                className="px-4 py-2 text-[20px] font-[400] text-white bg-customRed rounded"
               >
-                Compress file
+                Try again
               </button>
             </div>
           </div>

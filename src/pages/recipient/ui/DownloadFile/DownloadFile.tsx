@@ -216,9 +216,9 @@ const DownloadFile = () => {
                 Something went wrong
               </h4>
             </div>
-            <div className="px-3 mt-2 text-customBlack">
+            <p className="px-3 mt-2 text-customBlack start">
               An unknown error occurred while downloading the file
-            </div>
+            </p>
             <div className="flex end gap-6  mt-4 space-x-2">
               <button
                 onClick={() => {

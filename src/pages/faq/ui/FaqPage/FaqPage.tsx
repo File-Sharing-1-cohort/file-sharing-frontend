@@ -24,10 +24,10 @@ const FaqPage = () => {
             className="border rounded-[16px] px-5 py-6 bg-gradient-faq"
             value={slug}
           >
-            <AccordionTrigger className="text-[20px] font-[400]">
+            <AccordionTrigger className="text-[20px] font-[400] font-mallana">
               {title}
             </AccordionTrigger>
-            <AccordionContent className="text-[20px] font-[400] px-6 mt-2">
+            <AccordionContent className="text-[20px] leading-160 font-[400] px-6 mt-2 font-mallana">
               {description}
             </AccordionContent>
           </AccordionItem>

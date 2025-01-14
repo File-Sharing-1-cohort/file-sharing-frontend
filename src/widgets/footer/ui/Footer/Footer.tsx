@@ -23,7 +23,7 @@ const Footer: FC<TFooterProps> = () => {
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 0);
-  }
+  };
 
   return (
     <footer className="bg-header-footer-gradient shadow-custom px-11 py-9">

@@ -18,7 +18,7 @@ const faqDto: IFaqDto[] = [
     id: 3,
     title: 'Should recipient be registered to send files?',
     description:
-      'No, sender as well as repicient can send files without registration.',
+      'No, sender as well as recipient can send files without registration.',
     slug: 'does-recipient-need-registration',
   },
   {
@@ -38,23 +38,23 @@ const faqDto: IFaqDto[] = [
   },
   {
     id: 6,
-    title: 'How long does a link is stored?',
-    description: 'The link is stored during 24h after it was generated.',
+    title: 'How long is a link stored?',
+    description: 'The link is stored for 24 hours after it is generated.',
     slug: 'how-long-are-files-stored',
   },
   {
     id: 7,
     title: 'Is file transfer confidential?',
     description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis, error fuga. Dolor, cumque. Eligendi labore officia, ad explicabo repellat assumenda ipsum asperiores consectetur provident iure officiis laudantium animi velit sit!',
+      'The files you transfer through FileSharing can be seen only by the person you send link to. Additionally, you can protect your link with a password.',
     slug: 'is-file-transfer-confidential',
   },
   {
     id: 8,
     title:
-      'Can I choose and download separate files from the package I recieved?',
+      'Can I choose and download separate files from the package I received?',
     description:
-      'Yes. You can download whole package by pressing button “Download” against the package name, or you can also donwload separate files by selecting them with checkbuttons near files.',
+      'Yes, you can download the whole package by pressing the "Download" button next to the package name, or you can also download separate files by selecting them with the checkboxes next to the files.',
     slug: 'download-individual-files',
   },
   {
@@ -66,9 +66,9 @@ const faqDto: IFaqDto[] = [
   },
   {
     id: 10,
-    title: 'My package exceeds maximum size of 50 MB. What should I do?',
+    title: 'My package exceeds the maximum size of 50 MB. What should I do?',
     description:
-      'In case total size of your transfer exceeds 50 MB, FileSharing will offer you to archieve files or compress them during the upload. ',
+      'If the total size of your transfer exceeds 50 MB, FileSharing will offer you the option to archive or compress the files during the upload. ',
     slug: 'maximal-size-file',
   },
 ];

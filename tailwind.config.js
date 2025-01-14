@@ -7,6 +7,9 @@ export default {
       maxWidth: {
         1440: '1440px',
       },
+      lineHeight: {
+        160: '160%',
+      },
       boxShadow: {
         custom: '0px -8px 15px 0px rgba(170, 170, 170, 0.1)',
         'header-custom': '0px 8px 15px 0px rgba(170, 170, 170, 0.1)',
