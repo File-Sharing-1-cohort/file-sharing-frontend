@@ -42,6 +42,12 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
     validatePassword(newPassword);
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === ' ') {
+      e.preventDefault();
+    }
+  };
+
   const handleSave = () => {
     if (password.length < 1 || password.length > 30) {
       setErrorMessage('Password must be between 1 and 30 characters');
@@ -73,6 +79,7 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
               className={`pr-10 ${errorMessage ? 'bg-[#FE51514D]' : ''}`}
               value={password}
               onChange={handlePasswordChange}
+              onKeyPress={handleKeyPress}
             />
             <img
               onClick={() => setShowPassword(prev => !prev)}
