@@ -14,35 +14,60 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
 
   const isValidFileType = (file: File): Promise<string | null> => {
     return new Promise((resolve, reject) => {
-      const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip', 'rar'];
-      
+      const allowedExtensions = [
+        'jpg',
+        'jpeg',
+        'png',
+        'gif',
+        'pdf',
+        'doc',
+        'docx',
+        'xls',
+        'xlsx',
+        'zip',
+        'rar',
+      ];
+
       const fileExtension = file.name.split('.').pop()?.toLowerCase();
+
       if (allowedExtensions.includes(fileExtension || '')) {
         if (fileExtension === 'zip' || fileExtension === 'rar') {
+          resolve(fileExtension);
+        } else if (fileExtension === 'doc' || fileExtension === 'docx' || fileExtension === 'xls' || fileExtension === 'xlsx') {
           resolve(fileExtension);
         } else {
           const reader = new FileReader();
           reader.onload = function () {
             const arr = new Uint8Array(reader.result as ArrayBuffer);
 
-            if (arr[0] === 0x25 && arr[1] === 0x50 && arr[2] === 0x44 && arr[3] === 0x46) {
+            if (
+              arr[0] === 0x25 &&
+              arr[1] === 0x50 &&
+              arr[2] === 0x44 &&
+              arr[3] === 0x46
+            ) {
               resolve('pdf');
-            }
-            
-            else if (arr[0] === 0xFF && arr[1] === 0xD8 && arr[2] === 0xFF) {
+            } else if (arr[0] === 0xff && arr[1] === 0xd8 && arr[2] === 0xff) {
               resolve('jpeg');
-            }
-            
-            else if (arr[0] === 0x89 && arr[1] === 0x50 && arr[2] === 0x4E && arr[3] === 0x47 && 
-                    arr[4] === 0x0D && arr[5] === 0x0A && arr[6] === 0x1A && arr[7] === 0x0A) {
+            } else if (
+              arr[0] === 0x89 &&
+              arr[1] === 0x50 &&
+              arr[2] === 0x4e &&
+              arr[3] === 0x47 &&
+              arr[4] === 0x0d &&
+              arr[5] === 0x0a &&
+              arr[6] === 0x1a &&
+              arr[7] === 0x0a
+            ) {
               resolve('png');
-            }
-            
-            else if (arr[0] === 0x47 && arr[1] === 0x49 && arr[2] === 0x46 && arr[3] === 0x38) {
+            } else if (
+              arr[0] === 0x47 &&
+              arr[1] === 0x49 &&
+              arr[2] === 0x46 &&
+              arr[3] === 0x38
+            ) {
               resolve('gif');
-            }
-            
-            else {
+            } else {
               resolve(null);
             }
           };
@@ -51,7 +76,7 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
             reject('Error reading file');
           };
 
-          reader.readAsArrayBuffer(file.slice(0, 10)); 
+          reader.readAsArrayBuffer(file.slice(0, 10));
         }
       } else {
         resolve(null);
@@ -83,15 +108,15 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
       const validFiles: File[] = [];
 
       Promise.all(
-        files.map(file => 
+        files.map(file =>
           validateFile(file).then(error => {
             if (error) {
               errors.push(error);
             } else {
               validFiles.push(file);
             }
-          })
-        )
+          }),
+        ),
       ).then(() => {
         if (errors.length > 0) {
           const message = `The selected file format is not supported. Supported formats: jpg, jpeg, png, gif, doc, docx, xls, xlsx, pdf, zip, rar.`;
@@ -155,8 +180,8 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
           } else {
             validFiles.push(file);
           }
-        })
-      )
+        }),
+      ),
     ).then(() => {
       if (validFiles.length > 0) {
         onFileChange(validFiles);

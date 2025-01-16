@@ -5,6 +5,7 @@ import { Input } from '@/shared/ui';
 import { Progress } from '@/shared/ui';
 import { FolderDownload } from '@/shared/ui/LoadingComponent';
 import { LinkInc } from '@/shared/ui/LinkIncorrect';
+import folderDownload from '@/shared/ui/icons/folder-download.svg';
 import basket from '@/shared/ui/icons/red-basket.svg';
 import download from '@/shared/ui/icons/download-img.svg';
 import compress from '@/shared/ui/icons/compress-img.svg';
@@ -33,6 +34,7 @@ const DownloadFile = () => {
   // const [isSelected, setIsSelected] = useState(false);
   // const [selectedCount, setSelectedCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDownloaded, setIsDownloaded] = useState(false);
   const [error, setError] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(false);
   const [abortController, setAbortController] =
@@ -179,6 +181,7 @@ const DownloadFile = () => {
             <div className="flex end gap-6  mt-4 space-x-2">
               <button
                 onClick={() => {
+                  setIsDownloaded(true);
                   toast.dismiss();
                 }}
                 className="px-4 py-2 border border-customGreen text-customGray bg-transparent rounded"
@@ -187,6 +190,7 @@ const DownloadFile = () => {
               </button>
               <button
                 onClick={() => {
+                  setIsDownloaded(true);
                   toast.dismiss();
                 }}
                 className="px-4 py-2 text-[20px] font-[400] text-white bg-customGreen rounded"
@@ -298,6 +302,8 @@ const DownloadFile = () => {
     fetchFileMetadata();
   }, [fileId, navigate]);
 
+  console.log('isDownloaded:', isDownloaded);
+
   return (
     <section className="flex flex-col gap-20 items-center container py-20  max-w-1440 mx-auto">
       {error ? (
@@ -331,19 +337,28 @@ const DownloadFile = () => {
               {expirationTime(metadata.loadedAt, metadata.expirationHours)}
             </p>
           )}
-
-          <div className="flex flex-col items-center gap-6 mt-6">
-            <FolderDownload />
-            <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
-              <button
-                className="btn_cancel text-[24px] font-[300] font-mallana"
-                onClick={cancelDownload}
-              >
-                Cancel
-              </button>
-              <img src={basket} alt="Cancel upload" />
-            </div>
-          </div>
+              {!isDownloaded ?
+                (<div className="flex flex-col items-center gap-6 mt-6">
+                  <FolderDownload />
+                  <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
+                    <button
+                      className="btn_cancel text-[24px] font-[300] font-mallana"
+                      onClick={cancelDownload}
+                    >
+                      Cancel
+                    </button>
+                    <img src={basket} alt="Cancel upload" />
+                  </div>
+                </div>) :
+                (<div className='flex flex-col gap-20 items-center'>
+                  <img src={folderDownload} alt="folderDownload" />
+                  <button
+                    className="gradient-border btn-home hover:opacity-70"
+                    onClick={() => navigate('/')}
+                  >
+                    To home page
+                  </button>
+                </div>)}
 
           {/* Якщо потрібна таблиця з файлами */}
           {/* <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
