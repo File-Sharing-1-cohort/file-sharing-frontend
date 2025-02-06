@@ -55,7 +55,7 @@ const DownloadLink = () => {
             ),
             {
               duration: Infinity,
-                style: {
+              style: {
                 position: 'fixed',
                 top: '20px',
                 left: '50%',
@@ -76,7 +76,9 @@ const DownloadLink = () => {
     <section className="flex flex-col gap-4 items-center w-screen p-8 md:p-10">
       <div>
         <div>
-          <span className="font-mallana text-[20px] px-4 md:px-72">Your link</span>
+          <span className="font-mallana text-[20px] px-4 md:px-72">
+            Your link
+          </span>
           <div className="flex gap-4 items-center w-screen px-4 md:px-72">
             <Input
               value={fileUrl || ''}

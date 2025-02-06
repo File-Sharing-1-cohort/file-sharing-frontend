@@ -171,7 +171,7 @@ const SenderPage: React.FC = () => {
         ),
         {
           duration: Infinity,
-            style: {
+          style: {
             position: 'fixed',
             top: '20px',
             left: '50%',
@@ -237,7 +237,7 @@ const SenderPage: React.FC = () => {
         ),
         {
           duration: Infinity,
-            style: {
+          style: {
             position: 'fixed',
             top: '20px',
             left: '50%',
@@ -290,7 +290,7 @@ const SenderPage: React.FC = () => {
       ),
       {
         duration: Infinity,
-          style: {
+        style: {
           position: 'fixed',
           top: '20px',
           left: '50%',
@@ -343,7 +343,7 @@ const SenderPage: React.FC = () => {
         ),
         {
           duration: Infinity,
-            style: {
+          style: {
             position: 'fixed',
             top: '20px',
             left: '50%',
@@ -430,7 +430,9 @@ const SenderPage: React.FC = () => {
                         } rounded-full transition-transform`}
                       />
                     </div>
-                    <span className="font-mallana text-[20px] text-customGray">Set password</span>
+                    <span className="font-mallana text-[20px] text-customGray">
+                      Set password
+                    </span>
                   </div>
 
                   <div
@@ -467,10 +469,14 @@ const SenderPage: React.FC = () => {
         </div>
 
         <div className="flex flex-col gap-6 items-start gradient-service px-4 py-2 md:px-40 py-10">
-          <h2 className="font-libre text-customGray text-[24px] font-medium md:text-[32px]">How to use the service?</h2>
+          <h2 className="font-libre text-customGray text-[24px] font-medium md:text-[32px]">
+            How to use the service?
+          </h2>
           <div className="flex flex-col gap-6 md:flex-row">
             <div className="flex-1">
-              <p className="mb-4 text-[20px] font-libre text-customGray font-medium">To send files:</p>
+              <p className="mb-4 text-[20px] font-libre text-customGray font-medium">
+                To send files:
+              </p>
               <ol className="list-decimal pl-5">
                 <li className="leading-normal font-mallana text-customGray text-[18px] md:text-[20px]">
                   Press the “Upload” button, or drag and drop files into the
@@ -488,7 +494,9 @@ const SenderPage: React.FC = () => {
               </ol>
             </div>
             <div className="flex-1">
-              <p className="mb-4 text-[20px] font-libre text-customGray font-medium">To receive files:</p>
+              <p className="mb-4 text-[20px] font-libre text-customGray font-medium">
+                To receive files:
+              </p>
               <ol className="list-decimal pl-5">
                 <li className="leading-normal font-mallana text-customGray text-[18px] md:text-[20px]">
                   Insert the link in the browser’s address bar.

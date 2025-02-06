@@ -153,7 +153,7 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
             ),
             {
               duration: Infinity,
-                style: {
+              style: {
                 position: 'fixed',
                 top: '20px',
                 left: '50%',
@@ -219,9 +219,11 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
     >
-      <label className="btn-primary hover:opacity-70 gap-4 
+      <label
+        className="btn-primary hover:opacity-70 gap-4 
           w-screen flex flex-row justify-center items-center
-          md:w-auto">
+          md:w-auto"
+      >
         <span className="text-[20px] font-mallana min-w-fit">Select files</span>
         <img src={uploadFileIcon} alt="uploadFile" />
         <Input
@@ -234,8 +236,12 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
       </label>
 
       <div className="flex flex-col items-center gap-2 md:gap-16">
-        <p className="hidden md:flex text-[20px] text-customGray">or drag and drop files here</p>
-        <p className="font-mallana text-[18px] md:text-[16px] text-customGray">Max size 50 MB</p>
+        <p className="hidden md:flex text-[20px] text-customGray">
+          or drag and drop files here
+        </p>
+        <p className="font-mallana text-[18px] md:text-[16px] text-customGray">
+          Max size 50 MB
+        </p>
       </div>
     </div>
   );

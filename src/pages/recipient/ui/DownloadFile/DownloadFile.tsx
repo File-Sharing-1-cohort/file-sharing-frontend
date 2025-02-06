@@ -202,7 +202,7 @@ const DownloadFile = () => {
         ),
         {
           duration: Infinity,
-            style: {
+          style: {
             position: 'fixed',
             top: '20px',
             left: '50%',
@@ -249,7 +249,7 @@ const DownloadFile = () => {
         ),
         {
           duration: Infinity,
-            style: {
+          style: {
             position: 'fixed',
             top: '20px',
             left: '50%',
