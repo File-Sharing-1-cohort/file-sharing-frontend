@@ -64,7 +64,7 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="flex flex-col items-center gap-10 gradient-modal p-6 rounded-lg shadow-lg w-[620px]">
+      <div className="flex flex-col items-center gap-10 gradient-modal p-6 rounded-lg shadow-lg w-[300px] md:w-[620px]">
         <div className="flex start justify-center gap-2">
           <img src={lock} alt="lock" />
           <h2 className="text-[20px] font-[500] text-white">

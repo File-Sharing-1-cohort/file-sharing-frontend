@@ -168,10 +168,10 @@ const DownloadFile = () => {
 
       toast.custom(
         () => (
-          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-success border rounded-lg shadow-lg">
+          <div className="flex flex-col gap-5 items-center p-9 w-[266px] md:w-[600px] bg-toast-success border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={success} alt="success" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
+              <h4 className="font-semibold text-customGray text-[20px] md:text-[24px] font-[600] whitespace-wrap">
                 File downloaded successfully
               </h4>
             </div>
@@ -184,7 +184,7 @@ const DownloadFile = () => {
                   setIsDownloaded(true);
                   toast.dismiss();
                 }}
-                className="px-4 py-2 border border-customGreen text-customGray bg-transparent rounded"
+                className="px-4 py-2 text-[16px] md:text-[20px] border border-customGreen text-customGray bg-transparent rounded"
               >
                 Exit
               </button>
@@ -193,7 +193,7 @@ const DownloadFile = () => {
                   setIsDownloaded(true);
                   toast.dismiss();
                 }}
-                className="px-4 py-2 text-[20px] font-[400] text-white bg-customGreen rounded"
+                className="px-4 py-2 text-[16px] md:text-[20px] font-[400] text-white bg-customGreen rounded"
               >
                 Continue
               </button>
@@ -202,10 +202,14 @@ const DownloadFile = () => {
         ),
         {
           duration: Infinity,
-          position: 'top-center',
-          className: `
-                fixed left-1/2 transform -translate-x-1/2
-              `,
+            style: {
+            position: 'fixed',
+            top: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'grid',
+            placeItems: 'center',
+          },
         },
       );
       setIsLoading(false);
@@ -213,10 +217,10 @@ const DownloadFile = () => {
       console.error('Download error:', error);
       toast.custom(
         () => (
-          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
+          <div className="flex flex-col gap-5 items-center p-9 w-[266px] md:w-[600px] bg-toast-error border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={errorIcon} alt="error" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
+              <h4 className="font-semibold text-customGray text-[20px] md:text-[24px] font-[600] whitespace-wrap">
                 Something went wrong
               </h4>
             </div>
@@ -244,11 +248,15 @@ const DownloadFile = () => {
           </div>
         ),
         {
-          duration: 3000,
-          position: 'top-center',
-          className: `
-                fixed left-1/2 transform -translate-x-1/2
-              `,
+          duration: Infinity,
+            style: {
+            position: 'fixed',
+            top: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'grid',
+            placeItems: 'center',
+          },
         },
       );
     }
@@ -305,7 +313,7 @@ const DownloadFile = () => {
   console.log('isDownloaded:', isDownloaded);
 
   return (
-    <section className="flex flex-col gap-20 items-center container py-20  max-w-1440 mx-auto">
+    <section className="flex flex-col gap-20 items-center container md:py-20  max-w-1440 mx-auto">
       {error ? (
         <LinkInc />
       ) : isLoading ? (
@@ -326,7 +334,7 @@ const DownloadFile = () => {
         </>
       ) : metadata ? (
         <div className="flex flex-col items-center gap-5 w-full p-6">
-          <h1 className="font-libre text-[48px] font-[500] text-customGray">
+          <h1 className="font-libre text-[24px] mt-2 mb-2 sm:text-[48px] text-customGray text-center mt-10 mb-20">
             Document package from{' '}
             {metadata?.loadedAt ? formatDate(metadata.loadedAt) : 'N/A'}
           </h1>
@@ -337,28 +345,30 @@ const DownloadFile = () => {
               {expirationTime(metadata.loadedAt, metadata.expirationHours)}
             </p>
           )}
-              {!isDownloaded ?
-                (<div className="flex flex-col items-center gap-6 mt-6">
-                  <FolderDownload />
-                  <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
-                    <button
-                      className="btn_cancel text-[24px] font-[300] font-mallana"
-                      onClick={cancelDownload}
-                    >
-                      Cancel
-                    </button>
-                    <img src={basket} alt="Cancel upload" />
-                  </div>
-                </div>) :
-                (<div className='flex flex-col gap-20 items-center'>
-                  <img src={folderDownload} alt="folderDownload" />
-                  <button
-                    className="gradient-border btn-home hover:opacity-70"
-                    onClick={() => navigate('/')}
-                  >
-                    To home page
-                  </button>
-                </div>)}
+          {!isDownloaded ? (
+            <div className="flex flex-col items-center gap-6 mt-6">
+              <FolderDownload />
+              <div className="flex items-center border-b border-customRedBorder py-2 gap-4">
+                <button
+                  className="btn_cancel text-[24px] font-[300] font-mallana"
+                  onClick={cancelDownload}
+                >
+                  Cancel
+                </button>
+                <img src={basket} alt="Cancel upload" />
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-20 items-center">
+              <img src={folderDownload} alt="folderDownload" />
+              <button
+                className="gradient-border btn-home hover:opacity-70"
+                onClick={() => navigate('/')}
+              >
+                To home page
+              </button>
+            </div>
+          )}
 
           {/* Якщо потрібна таблиця з файлами */}
           {/* <div className="grid grid-cols-3 gap-4 items-center justify-items-center w-full max-w-lg">
@@ -392,14 +402,14 @@ const DownloadFile = () => {
 
       {isModalOpen && (
         <div className="flex items-center justify-center">
-          <div className="flex flex-col items-center gap-16 gradient-modal p-9 rounded-lg shadow-lg w-[620px]">
+          <div className="flex flex-col items-center gap-16 gradient-modal p-4 md:p-9 rounded-lg shadow-lg w-[300px] md:w-[620px]">
             <div className="flex self-start items-center gap-2">
               <img src={lock} alt="lock" />
               <h2 className="font-libre text-[24px] font-[600] text-white">
                 Insert password
               </h2>
             </div>
-            <div className="w-full px-20">
+            <div className="w-full px-2 md:px-20">
               <span className="font-mallana text-customGrayLight text-[16px]">
                 Password
               </span>
@@ -444,7 +454,7 @@ const DownloadFile = () => {
           </div>
         </div>
       )}
-      <div className="flex justify-center items-center gap-10">
+      <div className="flex flex-col justify-center items-center gap-10 py-6 md:flex-row gap-0">
         <img src={download} alt="Download" />
         <img src={compress} alt="Compress" />
         <img src={share} alt="Share" />

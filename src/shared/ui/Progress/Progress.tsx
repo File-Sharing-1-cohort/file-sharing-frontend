@@ -33,7 +33,7 @@ const Progress = React.forwardRef<
             boxShadow: '0px 3px 12px 0px #116ACC26',
           }}
         >
-          <span className="absolute inset-0 flex items-center justify-center text-[24px] font-[500] text-white">
+          <span className="absolute inset-0 flex items-center justify-center font-mallana text-[20px] font-[500] text-white">
             {isCompleted
               ? 'Your data package was uploaded successfully'
               : `${value}%`}

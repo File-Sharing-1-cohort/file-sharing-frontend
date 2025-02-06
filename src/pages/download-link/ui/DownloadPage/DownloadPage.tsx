@@ -30,10 +30,10 @@ const DownloadLink = () => {
         .then(() => {
           toast.custom(
             () => (
-              <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-success border rounded-lg shadow-lg">
+              <div className="flex flex-col gap-5 items-center p-9 w-[266px] md:w-[600px] bg-toast-success border rounded-lg shadow-lg">
                 <div className="flex start gap-2">
                   <img src={success} alt="success" />
-                  <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
+                  <h4 className="font-semibold text-customGray text-[20px] md:text-[24px] font-[600] whitespace-wrap">
                     Link copied
                   </h4>
                 </div>
@@ -54,11 +54,15 @@ const DownloadLink = () => {
               </div>
             ),
             {
-              duration: 3000,
-              position: 'top-center',
-              className: `
-                  fixed left-1/2 transform -translate-x-1/2
-                `,
+              duration: Infinity,
+                style: {
+                position: 'fixed',
+                top: '20px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                display: 'grid',
+                placeItems: 'center',
+              },
             },
           );
         })
@@ -69,14 +73,14 @@ const DownloadLink = () => {
   };
 
   return (
-    <section className="flex flex-col gap-4 items-center w-screen p-10">
+    <section className="flex flex-col gap-4 items-center w-screen p-8 md:p-10">
       <div>
         <div>
-          <span className="px-72">Your link</span>
-          <div className="flex gap-4 items-center w-screen px-72">
+          <span className="font-mallana text-[20px] px-4 md:px-72">Your link</span>
+          <div className="flex gap-4 items-center w-screen px-4 md:px-72">
             <Input
               value={fileUrl || ''}
-              className="w-full border-[#116ACC]"
+              className="w-full border-[#116ACC] font-mallana text-[20px] text-customGray"
               readOnly
             />
             <img
@@ -87,7 +91,7 @@ const DownloadLink = () => {
             />
           </div>
         </div>
-        <div className="px-72 text-red-400">
+        <div className="font-mallana text-[20px] px-4 md:px-72 text-red-400">
           The file is available till{' '}
           {fileExpirationDate ? fileExpirationDate : 'N/A'}
         </div>
@@ -95,7 +99,7 @@ const DownloadLink = () => {
 
       <img className="end" src={folder} alt="folder" />
 
-      <div className="mt-20 px-20 end">
+      <div className="center mt-20 px-20 md:end">
         <button
           className="gradient-border btn-home hover:opacity-70"
           onClick={() => navigate('/')}

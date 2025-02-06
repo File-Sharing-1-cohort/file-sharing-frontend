@@ -33,7 +33,12 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
       if (allowedExtensions.includes(fileExtension || '')) {
         if (fileExtension === 'zip' || fileExtension === 'rar') {
           resolve(fileExtension);
-        } else if (fileExtension === 'doc' || fileExtension === 'docx' || fileExtension === 'xls' || fileExtension === 'xlsx') {
+        } else if (
+          fileExtension === 'doc' ||
+          fileExtension === 'docx' ||
+          fileExtension === 'xls' ||
+          fileExtension === 'xlsx'
+        ) {
           resolve(fileExtension);
         } else {
           const reader = new FileReader();
@@ -122,10 +127,10 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
           const message = `The selected file format is not supported. Supported formats: jpg, jpeg, png, gif, doc, docx, xls, xlsx, pdf, zip, rar.`;
           toast.custom(
             () => (
-              <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
+              <div className="flex flex-col gap-5 items-center p-9 w-[266px] md:w-[600px] bg-toast-error border rounded-lg shadow-lg">
                 <div className="flex start gap-2">
                   <img src={error} alt="error" />
-                  <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
+                  <h4 className="font-semibold text-customGray text-[20px] md:text-[24px] font-[600] whitespace-wrap">
                     File upload error
                   </h4>
                 </div>
@@ -148,8 +153,14 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
             ),
             {
               duration: Infinity,
-              position: 'top-center',
-              className: 'fixed left-1/2 transform -translate-x-1/2',
+                style: {
+                position: 'fixed',
+                top: '20px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                display: 'grid',
+                placeItems: 'center',
+              },
             },
           );
         }
@@ -202,14 +213,16 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
 
   return (
     <div
-      className={`flex flex-col gap-3 items-center w-full rounded-lg pt-44 pb-10 ${isDragging ? 'drag-gradient drag-backdrop opacity-70' : 'drag-gradient drag-backdrop'}`}
+      className={`flex flex-col md:flex flex-col gap-3 items-center w-full md:rounded-lg md:pt-44 md:pb-10 ${isDragging ? 'md:drag-gradient md:drag-backdrop opacity-70' : 'md:drag-gradient md:drag-backdrop'}`}
       onDrop={handleDrop}
       onDragOver={event => event.preventDefault()}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
     >
-      <label className="btn-primary hover:opacity-70 gap-4">
-        <span className="text-[20px] min-w-fit">Select files</span>
+      <label className="btn-primary hover:opacity-70 gap-4 
+          w-screen flex flex-row justify-center items-center
+          md:w-auto">
+        <span className="text-[20px] font-mallana min-w-fit">Select files</span>
         <img src={uploadFileIcon} alt="uploadFile" />
         <Input
           data-testid="select-files-input"
@@ -220,9 +233,9 @@ const UploadFile: React.FC<UploadFileProps> = ({ onFileChange }) => {
         />
       </label>
 
-      <div className="flex flex-col items-center gap-16">
-        <p className="text-[20px]">or drag and drop files here</p>
-        <p className="text-[16px]">Max size 50 MB</p>
+      <div className="flex flex-col items-center gap-2 md:gap-16">
+        <p className="hidden md:flex text-[20px] text-customGray">or drag and drop files here</p>
+        <p className="font-mallana text-[18px] md:text-[16px] text-customGray">Max size 50 MB</p>
       </div>
     </div>
   );

@@ -139,10 +139,10 @@ const SenderPage: React.FC = () => {
     } else {
       toast.custom(
         () => (
-          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
+          <div className="flex flex-col gap-5 items-center p-9 w-[266px] md:w-[600px] bg-toast-error border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={errorIcon} alt="error" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
+              <h4 className="font-semibold text-customGray text-[20px] md:text-[24px] font-[600] whitespace-wrap">
                 An error occurred while uploading the file
               </h4>
             </div>
@@ -171,10 +171,14 @@ const SenderPage: React.FC = () => {
         ),
         {
           duration: Infinity,
-          position: 'top-center',
-          className: `
-                fixed left-1/2 transform -translate-x-1/2
-              `,
+            style: {
+            position: 'fixed',
+            top: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'grid',
+            placeItems: 'center',
+          },
         },
       );
     }
@@ -209,10 +213,10 @@ const SenderPage: React.FC = () => {
     if (newPassword) {
       toast.custom(
         () => (
-          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-success border rounded-lg shadow-lg">
+          <div className="flex flex-col gap-5 items-center p-9 w-[266px] md:w-[600px] bg-toast-success border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={success} alt="success" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
+              <h4 className="font-semibold text-customGray text-[20px] md:text-[24px] font-[600] whitespace-wrap">
                 Password set successfully
               </h4>
             </div>
@@ -233,10 +237,14 @@ const SenderPage: React.FC = () => {
         ),
         {
           duration: Infinity,
-          position: 'top-center',
-          className: `
-                fixed left-1/2 transform -translate-x-1/2
-              `,
+            style: {
+            position: 'fixed',
+            top: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'grid',
+            placeItems: 'center',
+          },
         },
       );
     }
@@ -246,14 +254,14 @@ const SenderPage: React.FC = () => {
   const handleCancelFile = (fileToRemove: File) => {
     toast.custom(
       () => (
-        <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-alert border rounded-lg shadow-lg">
+        <div className="flex flex-col gap-5 items-center p-9 w-[266px] md:w-[600px] bg-toast-alert border rounded-lg shadow-lg">
           <div className="flex start gap-2">
             <img src={alert} alt="alert" />
-            <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
+            <h4 className="font-semibold text-customGray text-[20px] md:text-[24px] font-[600] whitespace-wrap">
               Deleting file
             </h4>
           </div>
-          <div className="start mt-2 text-customBlack">
+          <div className="start mt-2 font-mallana text-customBlack">
             Are you sure that you want to delete file?
           </div>
           <div className="flex end gap-6  mt-4 space-x-2">
@@ -282,10 +290,14 @@ const SenderPage: React.FC = () => {
       ),
       {
         duration: Infinity,
-        position: 'top-center',
-        className: `
-        fixed left-1/2 transform -translate-x-1/2
-      `,
+          style: {
+          position: 'fixed',
+          top: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'grid',
+          placeItems: 'center',
+        },
       },
     );
   };
@@ -301,10 +313,10 @@ const SenderPage: React.FC = () => {
       const message = `Cannot upload files larger than 50MB. Please select another files.`;
       toast.custom(
         () => (
-          <div className="flex flex-col gap-5 items-center p-9 w-[600px] bg-toast-error border rounded-lg shadow-lg">
+          <div className="flex flex-col gap-5 items-center p-9 w-[266px] md:w-[600px] bg-toast-error border rounded-lg shadow-lg">
             <div className="flex start gap-2">
               <img src={errorIcon} alt="error" />
-              <h4 className="font-semibold text-customGray text-[24px] font-[600] whitespace-nowrap">
+              <h4 className="font-semibold text-customGray text-[20px] md:text-[24px] font-[600] whitespace-wrap">
                 An error occurred while uploading the file
               </h4>
             </div>
@@ -331,10 +343,14 @@ const SenderPage: React.FC = () => {
         ),
         {
           duration: Infinity,
-          position: 'top-center',
-          className: `
-                fixed left-1/2 transform -translate-x-1/2
-              `,
+            style: {
+            position: 'fixed',
+            top: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'grid',
+            placeItems: 'center',
+          },
         },
       );
     } else {
@@ -345,7 +361,7 @@ const SenderPage: React.FC = () => {
   return (
     <section className="flex flex-col">
       <div className="flex flex-col min-h-[calc(100vh-6.25rem)] justify-between">
-        <div className="flex flex-col items-center px-40">
+        <div className="flex flex-col items-center px-4 md:px-40">
           {uploadProgress !== null && <Progress value={uploadProgress} />}
 
           {isLoading ? (
@@ -376,15 +392,15 @@ const SenderPage: React.FC = () => {
                             <div className="flex w-4/5">
                               <p
                                 data-testid={`selected-file-name${index === 0 ? '' : '-' + index}`}
-                                className="text-[20px] max-w-[300px] overflow-hidden text-ellipsis whitespace-nowrap"
+                                className="font-mallana text-[20px] text-customGray max-w-[300px] overflow-hidden text-ellipsis whitespace-wrap"
                               >
                                 {file.name.split('.').slice(0, -1).join('.')}
                               </p>
-                              <p className="text-[20px]">
+                              <p className="font-mallana text-[20px] text-customGray">
                                 .{file.name.split('.').pop()}
                               </p>
                             </div>
-                            <p className="text-[20px]">
+                            <p className="font-mallana text-[20px] text-customGray">
                               {formatFileSize(file.size)}
                             </p>
                             <img
@@ -414,7 +430,7 @@ const SenderPage: React.FC = () => {
                         } rounded-full transition-transform`}
                       />
                     </div>
-                    <span className="text-[20px]">Set password</span>
+                    <span className="font-mallana text-[20px] text-customGray">Set password</span>
                   </div>
 
                   <div
@@ -425,7 +441,7 @@ const SenderPage: React.FC = () => {
                   </div>
                 </div>
               )}
-              <h1 className="font-libre text-[48px] text-center mt-10 mb-20">
+              <h1 className="font-libre text-[24px] sm:text-[48px] text-customGray text-center mt-10 mb-20 ">
                 Fast file sharing without registration
               </h1>
               <UploadFile
@@ -443,44 +459,44 @@ const SenderPage: React.FC = () => {
             />
           )}
 
-          <div className="flex justify-center items-center gap-10 py-6">
+          <div className="flex flex-col justify-center items-center gap-10 py-6 md:flex-row gap-0">
             <img src={download} alt="Download" />
             <img src={compress} alt="Compress" />
             <img src={share} alt="Share" />
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 items-start gradient-service px-44 py-10">
-          <h2 className="text-[32px] font-medium">How to use the service?</h2>
-          <div className="flex gap-6">
+        <div className="flex flex-col gap-6 items-start gradient-service px-4 py-2 md:px-40 py-10">
+          <h2 className="font-libre text-customGray text-[24px] font-medium md:text-[32px]">How to use the service?</h2>
+          <div className="flex flex-col gap-6 md:flex-row">
             <div className="flex-1">
-              <p className="mb-4 text-[20px] font-medium">To send files:</p>
+              <p className="mb-4 text-[20px] font-libre text-customGray font-medium">To send files:</p>
               <ol className="list-decimal pl-5">
-                <li className="leading-normal text-[20px]">
+                <li className="leading-normal font-mallana text-customGray text-[18px] md:text-[20px]">
                   Press the “Upload” button, or drag and drop files into the
                   blue window.
                 </li>
-                <li className="leading-normal text-[20px]">
+                <li className="leading-normal font-mallana text-customGray text-[18px] md:text-[20px]">
                   After a successful upload, add more files if needed.
                 </li>
-                <li className="leading-normal text-[20px]">
+                <li className="leading-normal font-mallana text-customGray text-[18px] md:text-[20px]">
                   Set a password, if required.
                 </li>
-                <li className="leading-normal text-[20px]">
+                <li className="leading-normal font-mallana text-customGray text-[18px] md:text-[20px]">
                   Copy the link and send it to the recipient.
                 </li>
               </ol>
             </div>
             <div className="flex-1">
-              <p className="mb-4 text-[20px] font-medium">To receive files:</p>
+              <p className="mb-4 text-[20px] font-libre text-customGray font-medium">To receive files:</p>
               <ol className="list-decimal pl-5">
-                <li className="leading-normal text-[20px]">
+                <li className="leading-normal font-mallana text-customGray text-[18px] md:text-[20px]">
                   Insert the link in the browser’s address bar.
                 </li>
-                <li className="leading-normal text-[20px]">
+                <li className="leading-normal font-mallana text-customGray text-[18px] md:text-[20px]">
                   Insert the password, if required.
                 </li>
-                <li className="leading-normal text-[20px]">
+                <li className="leading-normal font-mallana text-customGray text-[18px] md:text-[20px]">
                   Download the whole package by clicking the “Download” button
                   in the upper-right corner, or download separate files by
                   selecting them with the checkbox.
